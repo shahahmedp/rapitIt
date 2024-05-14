@@ -1,6 +1,6 @@
 {
-  "name": "rapitIT",
-  "version": "1.0.0",
+  "name": "rapid",
+  "version": "1.1.0",
   "description": "This an Backend application with added production ready code base",
   "main": "index.js",
   "scripts": {
