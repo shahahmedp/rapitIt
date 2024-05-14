@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    // ECMAScript related options
+    "target": "es6",
+    "module": "commonjs",
+    "baseUrl": "./src",
+    "rootDir": "./",
+    "outDir": "./build",
+
+    "paths": {
+      "@db/*": ["./db/*"], // Define alias for db directory
+      "@utils/*": ["./utils/*"], // Define alias for utils directory
+      "@constants/*": ["./constants/*"], // Define alias for constants directory
+      "@middlewares/*": ["./middlewares/*"] // Define alias for constants directory
+    },
+    // Advanced JavaScript features
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+
+    // Strict type-checking options
+    "strict": true,
+    "strictNullChecks": true,
+
+    // Other strict type-checking options
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Module interoperability options
+    "esModuleInterop": true,
+
+    // Type declaration files
+    "types": [
+      "jest"
+    ],
+
+    // Performance and optimization options
+    "skipLibCheck": true
+  },
+  "ignorePatterns": [
+    "node_modules/", // Ignore the node_modules directory
+    "build/",        // Ignore the build directory
+    "eslint.config.js"
+  ],
+  // Source files to include
+  "include": ["src/**/*.ts"],
+  // Directories to exclude from compilation
+  "exclude": ["node_modules"]
+}

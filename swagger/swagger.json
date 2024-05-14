@@ -1,0 +1,140 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "List of API endpoints for backend server",
+    "version": "1.0.0",
+    "title": "Damco Server API Documentation",
+    "contact": {
+      "email": ""
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "schemes": ["http", "https"],
+  "host": "localhost:4000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Tests",
+      "description": "List of API endpoints for test operations"
+    }
+  ],
+  "paths": {
+    "/tests": {
+      "post": {
+        "tags": ["Tests"],
+        "summary": "Create Tests",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Test data to create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "customerId": {
+                  "type": "string",
+                  "example": "uuid"
+                },
+                "orderId": {
+                  "type": "string",
+                  "example": "uuid"
+                },
+                "merchantId": {
+                  "type": "string",
+                  "example": "uuid"
+                },
+                "claimAmount": {
+                  "type": "number"
+                },
+                "claimSummary": {
+                  "type": "string"
+                },
+                "statusId": {
+                  "type": "number"
+                }
+              },
+              "required": ["customerId", "orderId"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Tests"],
+        "summary": "Update Tests",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Test data to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "customerId": {
+                  "type": "string",
+                  "example": "uuid"
+                },
+                "orderId": {
+                  "type": "string",
+                  "example": "uuid"
+                },
+                "claimAmount": {
+                  "type": "number"
+                },
+                "claimSummary": {
+                  "type": "string"
+                },
+                "statusId": {
+                  "type": "number"
+                },
+                "updatedBy": {
+                  "type": "string",
+                  "example": "uuid"
+                }
+              },
+              "required": ["customerId", "orderId"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    }
+  }
+}
