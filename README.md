@@ -1,6 +1,6 @@
-# EngageXr coding assignment
+# rapid_it coding assignment
 
-This project contains the backend code for the EngageXr coding assigment.
+This project contains the backend code for the rapid_it coding assigment.
 
 ## Features covered
 
@@ -27,7 +27,7 @@ This project contains the backend code for the EngageXr coding assigment.
 | `username` | `string` | **Your username**                 |
 | `password` | `string` | **Your password**.                |
 
-- All api reference is given in bellow and to ease API testing there is a POSTMAN api JSON file added in the root of the project **(/postman/engagexr-apis.postman_collection.json)** directory. Import this file in the POSTMAN application and test the API with pre-loaded data. More info about API's is given in the API Reference section.
+- All api reference is given in bellow and to ease API testing there is a POSTMAN api JSON file added in the root of the project **(/postman/rapid_it-apis.postman_collection.json)** directory. Import this file in the POSTMAN application and test the API with pre-loaded data. More info about API's is given in the API Reference section.
 
 - you can find the server logs under consoleLogs folder under the src directory.
 
@@ -42,13 +42,13 @@ To run this project, you will need to add the following environment variables to
 Clone the project
 
 ```bash
-  git clone -b main https://github.com/shahahmedp/engageXR-.git
+  git clone -b main https://github.com/shahahmedp/rapid_it-.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd engageXRBackedn
+  cd rapid_itBackedn
 ```
 
 Install dependencies
