@@ -9,7 +9,6 @@ import cookieParser from 'cookie-parser';
 require('dotenv').config({ path: `./env/${process.env.NODE_ENV ? `.${process.env.NODE_ENV}.env` : `.env`}` });
 import {
   getHostUrl,
-  //logger
 } from './utils'; // Importing utility functions and logger
 import { routes } from './init/routes'; // Importing application routes
 
