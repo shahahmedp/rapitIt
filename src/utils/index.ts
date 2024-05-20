@@ -1,7 +1,7 @@
 import ip from 'ip';
 import { config } from '../config/config';
-import { newEmail } from './email';
-import { upload } from './fileUploadAmazonS3';
+import { emailNodemailer } from './emailNodemailer';
+import { amazonS3Upload } from './amazonS3Upload';
 
 export const getHostUrl = (attachProtocol: boolean): string => {
   let serverUrl = 'localhost';
@@ -28,9 +28,5 @@ export function generateSixDigitOTP() {
   return Math.floor(Math.random() * 900000) + 100000;
 }
 
-
-export const S3FileUpload = upload;
-
-export const sendMail = (email: string, subject: string, template: string) => {
-  return newEmail(email as string, subject, template);
-};
+export { amazonS3Upload }
+export { emailNodemailer }

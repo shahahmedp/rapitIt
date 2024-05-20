@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 });
 
 // Initialize multer with the defined storage
-export const upload = multer({
+export const amazonS3Upload = multer({
   storage: storage,
   fileFilter: (_req, _file, cb) => {
     // Allow all files to be uploaded

@@ -8,7 +8,7 @@ import { IMailOptions, IMailResponseType } from '../types';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-export const newEmail = async (receiver: string, subject: string, body?: string): Promise<IMailResponseType> => {
+export const emailNodemailer = async (receiver: string, subject: string, body?: string): Promise<IMailResponseType> => {
   try {
     const mailOptions: IMailOptions = {
       from: config.nodemailerConfig.sender, //Sender Address
