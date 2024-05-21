@@ -92,6 +92,8 @@ const initialInquire = async () => {
   const taskList = [
     //all files of repo
     '*',
+    //remove the enquirer
+    '!enquirer/*',
     //tools 
     '!src/utils/*',
     'src/utils/index.ts',
@@ -101,7 +103,6 @@ const initialInquire = async () => {
     'src/config/config.ts',
     //db task list
     '!src/db/*',
-    'src/db/logs/*',
     'src/db/index.ts',
   ];
 
@@ -121,13 +122,11 @@ const initialInquire = async () => {
       }
     })
     //database configuration
-    if(answers.database === "both"){
-      taskList.push(`src/db/MongoDB/*`);
-      taskList.push(`src/db/PostgresSQL/*`);
-    }else{
-      taskList.push(`src/db/${answers.database}/*`);
+    if(answers.database === "mongoDB"){
+      taskList.push(`src/db/postgresSQL/*`);
+    }else if(answers.database === "postgresSQL") {
+      taskList.push(`src/db/mongoDB/*`);
     }
-    // Create project folder
     try {
       if (!fs.existsSync(projectPath)) {
         fs.mkdirSync(projectPath);
@@ -150,7 +149,7 @@ const initialInquire = async () => {
         execSync('git pull origin main');
         //removeNotSelectedTools(taskNameKeys, projectPath);
         updateConfig(answers, projectPath)
-        console.log(`Repository cloned to ${projectPath}`);
+        console.log(`Repository cloned to ${projectPath}`, taskList);
       }else {
         console.log(`This folder *${projectPath}* already exist`)
         initialInquire();
