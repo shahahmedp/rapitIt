@@ -3,7 +3,11 @@ import path from 'path';
 import fs from "fs";
 import { execSync } from "child_process";
 import { fileURLToPath } from 'url';
-//import { removeNotSelectedTools } from "./removeTools.mjs"
+import events from 'events'
+import { updateConfig } from "./removeTools.mjs"
+
+// Suppress MaxListenersExceededWarning
+events.EventEmitter.defaultMaxListeners = 20;
 
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -37,7 +41,7 @@ const initialInquire = async () => {
       type: 'input',
       name: 'awsS3Bucket',
       message: 'Enter the name of your AWS S3 bucket Name(if applicable):',
-      when: (answers) => answers.useAWS,
+      when: (answers) => answers.amazonS3Upload,
     },
     {
       type: 'confirm',
@@ -47,30 +51,30 @@ const initialInquire = async () => {
     {
       type: 'input',
       name: 'SMTP_HOST',
-      message: 'What is the SMTP HOST?',
+      message: `What is the SMTP HOST?`,
       default: '**********.amazonaws.com',
-      skip: (answers) => !answers.emailNodemailer,
+      when: (answers) => answers.emailNodemailer,
     },
     {
       type: 'input',
       name: 'SMTP_PORT',
       message: 'What is the SMTP PORT?',
       default: '587',
-      skip: (answers) => !answers.emailNodemailer,
+      when: (answers) => answers.emailNodemailer,
     },
     {
       type: 'input',
       name: 'MAILING_USERNAME',
       message: 'What is the MAILING USERNAME?',
       default: 'AKIA********************',
-      skip: (answers) => !answers.emailNodemailer,
+      when: (answers) => answers.emailNodemailer,
     },
     {
       type: 'password',
       name: 'MAILING_PASSWORD',
       message: 'What is the MAILING PASSWORD?',
       default: '************',
-      skip: (answers) => !answers.emailNodemailer,
+      when: (answers) => answers.emailNodemailer,
     },
     {
       type: 'rawlist',
@@ -86,18 +90,26 @@ const initialInquire = async () => {
   ]);
 
   const taskList = [
+    //all files of repo
     '*',
+    //tools 
     '!src/utils/*',
     'src/utils/index.ts',
     'src/utils/responseFormat.ts',
+    //config task list
     '!src/config/*',
     'src/config/config.ts',
+    //db task list
+    '!src/db/*',
+    'src/db/logs/*',
+    'src/db/index.ts',
   ];
 
   // Process user's input
   if (answers?.confirm) {
     const projectPath = path.join(__dirname, '../../' ,answers.projectName).replace(/%20/g, ' ');
     const getBooleanKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, value]) => typeof value === 'boolean' && key != 'confirm' && value));
+    //adding confirmation tools
     const taskNameKeys = Object.keys(getBooleanKeys(answers))
     taskNameKeys.forEach((task)=>{
       taskList.push(`src/utils/${task}.ts`);
@@ -108,6 +120,13 @@ const initialInquire = async () => {
         taskList.push(`src/config/${task}Client.ts`);
       }
     })
+    //database configuration
+    if(answers.database === "both"){
+      taskList.push(`src/db/MongoDB/*`);
+      taskList.push(`src/db/PostgresSQL/*`);
+    }else{
+      taskList.push(`src/db/${answers.database}/*`);
+    }
     // Create project folder
     try {
       if (!fs.existsSync(projectPath)) {
@@ -129,7 +148,8 @@ const initialInquire = async () => {
 
         // Pull from the repository
         execSync('git pull origin main');
-          //removeNotSelectedTools(taskNameKeys, projectPath)
+        //removeNotSelectedTools(taskNameKeys, projectPath);
+        updateConfig(answers, projectPath)
         console.log(`Repository cloned to ${projectPath}`);
       }else {
         console.log(`This folder *${projectPath}* already exist`)

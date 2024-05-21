@@ -55,3 +55,6 @@ export const removeNotSelectedTools = (tools, indexPath) => {
   //  });
 
 }
+export const updateConfig = (answers, indexPath) => {
+  console.log("updateConfig", answers.database, indexPath)
+}
