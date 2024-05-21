@@ -1,6 +1,6 @@
 import { config } from '../config/config';
-import { initPostgres, db as postgresDb } from './PostgresSQL/index';
-import { initMongo } from './MongoDB/index';
+import { initPostgres, db as postgresDb } from './postgresSQL/index';
+import { initMongo } from './mongoDB/index';
 import mongoose from 'mongoose';
 
 const dbInit = async () => {

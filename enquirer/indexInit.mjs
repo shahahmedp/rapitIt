@@ -25,7 +25,7 @@ const initialInquire = async () => {
       type: 'rawlist',
       name: 'database',
       message: 'What database are you using?',
-      choices: ['MongoDB', 'PostgreSQL', 'both'],
+      choices: ['mongoDB', 'postgreSQL', 'both'],
     },
     {
       type: 'confirm',
