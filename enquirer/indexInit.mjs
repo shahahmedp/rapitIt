@@ -124,7 +124,7 @@ const initialInquire = async () => {
     //database configuration
     if(answers.database === "mongoDB"){
       taskList.push(`!src/db/postgresSQL/*`);
-    }else if(answers.database === "PostgresSQL") {
+    }else if(answers.database === "postgresSQL") {
       taskList.push(`!src/db/mongoDB/*`);
     }
     try {
