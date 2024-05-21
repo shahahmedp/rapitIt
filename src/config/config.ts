@@ -6,11 +6,18 @@ require('dotenv').config({
 export const config = {
   PORT: process.env.PORT,
   dbConfig: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    type: 'Postgres', 
+    username: process.env.PG_DB_USER,
+    password: process.env.PG_DB_PASSWORD,
     database: process.env.DB_NAME,
     host: '127.0.0.1',
     dialect: 'postgres',
+    mongoUri: `process.env.MONGO_URI${process.env.DB_NAME}` || `mongodb://localhost:27017/${process.env.DB_NAME}`,
+  },
+  redisConfig: {
+    url: 'redis://localhost:6379', // Redis server URL
+    // Optional: Include if your Redis server requires authentication
+    password: '',
   },
   awsS3Bucket: process.env.IMAGEUpload + '',
   nodemailerConfig: {

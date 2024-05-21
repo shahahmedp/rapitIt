@@ -1,18 +1,21 @@
 {
   "compilerOptions": {
     // ECMAScript related options
-    "target": "es6",
+    "target": "ES2020",
     "module": "commonjs",
     "baseUrl": "./src",
-    "rootDir": "./",
     "outDir": "./build",
 
     "paths": {
-      "@db/*": ["./db/*"], // Define alias for db directory
-      "@utils/*": ["./utils/*"], // Define alias for utils directory
-      "@constants/*": ["./constants/*"], // Define alias for constants directory
-      "@middlewares/*": ["./middlewares/*"] // Define alias for constants directory
+      "@db/*": ["db/*"], // Define alias for db directory
+      "@utils/*": ["utils/*"], // Define alias for utils directory
+      "@constants/*": ["constants/*"], // Define alias for constants directory
+      "@controller/*": ["controller/*"], // Define alias for controller directory
+      "@middlewares/*": ["middlewares/*"] // Define alias for constants directory
     },
+    "lib":[
+     "ES2020" 
+    ],
     // Advanced JavaScript features
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -30,7 +33,7 @@
 
     // Module interoperability options
     "esModuleInterop": true,
-
+    "isolatedModules": true,
     // Type declaration files
     "types": [
       "jest"

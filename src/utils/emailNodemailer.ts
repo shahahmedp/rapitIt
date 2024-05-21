@@ -2,7 +2,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 // Types import
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { transporter } from '../config/nodemailer';
+import { transporter } from '../config/emailNodemailerTransPorter';
 import { config } from '../config/config';
 import { IMailOptions, IMailResponseType } from '../types';
 

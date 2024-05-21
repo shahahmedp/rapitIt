@@ -21,7 +21,12 @@ const initialInquire = async () => {
       type: 'rawlist',
       name: 'database',
       message: 'What database are you using?',
-      choices: ['MongoDB', 'PostgreSQL'],
+      choices: ['MongoDB', 'PostgreSQL', 'both'],
+    },
+    {
+      type: 'confirm',
+      name: 'redis',
+      message: 'Are you using redis cashing?',
     },
     {
       type: 'confirm',
@@ -43,25 +48,29 @@ const initialInquire = async () => {
       type: 'input',
       name: 'SMTP_HOST',
       message: 'What is the SMTP HOST?',
-      default: '**********.amazonaws.com'
+      default: '**********.amazonaws.com',
+      skip: (answers) => !answers.emailNodemailer,
     },
     {
       type: 'input',
       name: 'SMTP_PORT',
       message: 'What is the SMTP PORT?',
-      default: '587'
+      default: '587',
+      skip: (answers) => !answers.emailNodemailer,
     },
     {
       type: 'input',
       name: 'MAILING_USERNAME',
       message: 'What is the MAILING USERNAME?',
-      default: 'AKIA********************'
+      default: 'AKIA********************',
+      skip: (answers) => !answers.emailNodemailer,
     },
     {
       type: 'password',
       name: 'MAILING_PASSWORD',
       message: 'What is the MAILING PASSWORD?',
-      default: '************'
+      default: '************',
+      skip: (answers) => !answers.emailNodemailer,
     },
     {
       type: 'rawlist',
@@ -79,20 +88,26 @@ const initialInquire = async () => {
   const taskList = [
     '*',
     '!src/utils/*',
-    'src/utils/emailNodemailer.ts',
-    'src/utils/amazonS3Upload.ts',
     'src/utils/index.ts',
     'src/utils/responseFormat.ts',
+    '!src/config/*',
+    'src/config/config.ts',
   ];
 
   // Process user's input
   if (answers?.confirm) {
     const projectPath = path.join(__dirname, '../../' ,answers.projectName).replace(/%20/g, ' ');
     const getBooleanKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, value]) => typeof value === 'boolean' && key != 'confirm' && value));
-    // Object.keys(getBooleanKeys(answers)).forEach((task)=>{
-    //   taskList.push(`src/utils/${task}.ts`);
-    // })
-    console.log(`Hello, ${answers?.projectName}!`, answers, "../"+__dirname+"/"+ projectPath, ...taskList);
+    const taskNameKeys = Object.keys(getBooleanKeys(answers))
+    taskNameKeys.forEach((task)=>{
+      taskList.push(`src/utils/${task}.ts`);
+      if(task === "emailNodemailer"){
+        taskList.push(`src/config/${task}Transporter.ts`);
+      }
+      if(task === "redis"){
+        taskList.push(`src/config/${task}Client.ts`);
+      }
+    })
     // Create project folder
     try {
       if (!fs.existsSync(projectPath)) {
@@ -110,19 +125,11 @@ const initialInquire = async () => {
         execSync('git sparse-checkout set .');
 
         // Exclude all files in src/utils except index.ts and responseFormat.ts
-        //fs.writeFileSync('.git/info/sparse-checkout', taskList.join('\n'));
-        fs.writeFileSync('.git/info/sparse-checkout', [
-          '*',
-          '!src/utils/*',
-          'src/utils/emailNodemailer.ts',
-          'src/utils/amazonS3Upload.ts',
-          'src/utils/index.ts',
-          'src/utils/responseFormat.ts',
-        ].join('\n'));
+        fs.writeFileSync('.git/info/sparse-checkout', taskList.join('\n'));
 
         // Pull from the repository
         execSync('git pull origin main');
-
+          //removeNotSelectedTools(taskNameKeys, projectPath)
         console.log(`Repository cloned to ${projectPath}`);
       }else {
         console.log(`This folder *${projectPath}* already exist`)
