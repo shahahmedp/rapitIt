@@ -14,6 +14,7 @@ const start = async () => {
   // @ts-ignore
   app.listen(PORT, (err: Error | null) => {
     if (err) console.log(err);
+    //initializing the db 
     dbInit();
     logger.info(`Backend Service App started at: ${new Date()} on port ${PORT}`);
   });

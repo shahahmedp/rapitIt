@@ -69,8 +69,8 @@
     "security/detect-non-literal-fs-filename": "off", // Allow non-literal file system filenames
     "security/detect-child-process": "off", // Allow child processes
     "no-underscore-dangle": "off", // Allow underscores in identifiers
-    "@typescript-eslint/no-explicit-any": "error", // Disable explicit any type
-    "@typescript-eslint/no-unused-vars": "off", // Disable unused variables check
+    "@typescript-eslint/no-explicit-any": 2, // Disable explicit any type
+    "@typescript-eslint/no-unused-vars": "error", // Disable unused variables check
     "@typescript-eslint/no-var-requires": "error",
     "@typescript-eslint/ban-ts-comment": "off",
     "max-len": [

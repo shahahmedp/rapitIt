@@ -15,7 +15,10 @@
     "test:watch": "npm run test:devENV -- --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts)\""
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts)\"",
+    "docker:dev": "DOCKERFILE=Dockerfile.dev NODE_ENV=development docker-compose up --build",
+    "docker:prod": "DOCKERFILE=Dockerfile.prod NODE_ENV=production docker-compose up --build",
+    "docker:test": "DOCKERFILE=Dockerfile.test NODE_ENV=testing docker-compose up --build"
   },
   "husky": {
     "hooks": {
@@ -54,6 +57,7 @@
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.3",
     "sequelize-typescript": "^2.1.6",
+    "serve-static": "^1.15.0",
     "swagger-ui-express": "^5.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",

@@ -101,9 +101,6 @@ const initialInquire = async () => {
     //config task list
     '!src/config/*',
     'src/config/config.ts',
-    //db task list
-    '!src/db/*',
-    'src/db/index.ts',
   ];
 
   // Process user's input
@@ -112,6 +109,7 @@ const initialInquire = async () => {
     const getBooleanKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, value]) => typeof value === 'boolean' && key != 'confirm' && value));
     //adding confirmation tools
     const taskNameKeys = Object.keys(getBooleanKeys(answers))
+
     taskNameKeys.forEach((task)=>{
       taskList.push(`src/utils/${task}.ts`);
       if(task === "emailNodemailer"){
@@ -121,12 +119,6 @@ const initialInquire = async () => {
         taskList.push(`src/config/${task}Client.ts`);
       }
     })
-    //database configuration
-    if(answers.database === "mongoDB"){
-      taskList.push(`!src/db/postgresSQL/*`);
-    }else if(answers.database === "postgresSQL") {
-      taskList.push(`!src/db/mongoDB/*`);
-    }
     try {
       if (!fs.existsSync(projectPath)) {
         fs.mkdirSync(projectPath);
@@ -140,14 +132,27 @@ const initialInquire = async () => {
         execSync('git sparse-checkout init');
 
         // Add the entire repository to the sparse checkout
-        execSync('git sparse-checkout set .');
 
+        execSync('git sparse-checkout set .');
+        
         // Exclude all files in src/utils except index.ts and responseFormat.ts
         fs.writeFileSync('.git/info/sparse-checkout', taskList.join('\n'));
 
         // Pull from the repository
         execSync('git pull origin main');
-        //removeNotSelectedTools(taskNameKeys, projectPath);
+         //database configuration
+        console.log("answers.database 1", answers.database);
+        if (answers.database === 'both') {
+          taskList.push('src/db/mongoDB/');
+          taskList.push('src/db/postgresSQL/');
+          console.log("answers.database 2", answers.database);
+        } else if (answers.database === 'mongoDB') {
+          removePath(`${projectPath}/src/db/postgresSQL`)
+          console.log("answers.database 2", answers.database);
+        } else if (answers.database === 'postgreSQL') {
+          removePath(`${projectPath}/src/db/mongoDB`)
+          console.log("answers.database 2", answers.database);
+        }
         updateConfig(answers, projectPath)
         console.log(`Repository cloned to ${projectPath}`, taskList);
       }else {
@@ -162,3 +167,22 @@ const initialInquire = async () => {
   }
 }
 initialInquire();
+
+function removePath(targetPath) {
+  console.log("removePath", targetPath);
+  if (fs.existsSync(targetPath)) {
+    if (fs.lstatSync(targetPath).isDirectory()) {
+      fs.readdirSync(targetPath).forEach((file) => {
+        const curPath = path.join(targetPath, file);
+        if (fs.lstatSync(curPath).isDirectory()) {
+          removePath(curPath);
+        } else {
+          fs.unlinkSync(curPath);
+        }
+      });
+      fs.rmdirSync(targetPath);
+    } else {
+      fs.unlinkSync(targetPath);
+    }
+  }
+}
