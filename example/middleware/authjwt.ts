@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { config } from '../../src/config/config';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
-import { responseFormat } from '../../src/utils/responseFormat';
+import { handleError } from '../../src/utils';
 
 const jwt = require('jsonwebtoken');
 
@@ -35,18 +35,7 @@ export class AuthJwt {
         }
       });
     } catch (err: any) {
-      await responseFormat(
-        res,
-        dailogue.code500.code,
-        true,
-        {},
-        {},
-        {},
-        {
-          status: dailogue.code500.message,
-          message: err,
-        },
-      );
+      handleError(res, err, dailogue.code500.code);
     }
   }
 }

@@ -13,16 +13,20 @@ This project contains the backend code for the rapid_it coding assigment.
 - User DB table (Additional table to enforce log in as admin functionality)
 
 ## Important Instructions
+- This Repo is used to generate requirement basis tools and configuration set up with user cmd interface. 
+- This Repo is built with multiple tools of choice. Please setup based on your requirement in the system before installing and running the project.
+- After selecting all the necessary tools and db's in the system, create a database inside names of your choice.
 
-- This project is built with postgres as database choice. Please setup postgres in the system before installing and running the project.
-- After installing postgres in the system, create a database inside names ad metaseq.
-- Once you setup your postgres database you need to set the database name, username, password in **src/configs/sequelizeconfig.ts file**
+Please update the env with following info
+**src/configs/config.ts file**
 
 | key        | Type     | Description                       |
 | :--------- | :------- | :---------------------------------|
-| `database` | `string` | **Your postgres database name**.  |
+| `database` | `string` | **Your  database name**.  |
 | `username` | `string` | **Your username**                 |
 | `password` | `string` | **Your password**.                |
+| `redis_URL` | `string` | **Your redis url**.              |
+| `redis_password` | `string` | **Your redis password**.    |
 
 - All api reference is given in bellow and to ease API testing there is a POSTMAN api JSON file added in the root of the project **(/postman/rapid_it-apis.postman_collection.json)** directory. Import this file in the POSTMAN application and test the API with pre-loaded data. More info about API's is given in the API Reference section.
 

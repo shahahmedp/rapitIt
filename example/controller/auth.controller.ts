@@ -3,7 +3,8 @@ import { db } from '../../src/db';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
 import { config } from '../../src/config/config';
-import { responseFormat } from '../../src/utils/responseFormat';
+import { responseFormat } from '../../src/utils';
+import { handleError } from '../../src/utils';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -30,33 +31,7 @@ export class Auth {
           });
         });
     } catch (err) {
-      if (err instanceof Error) {
-        await responseFormat(
-          res,
-          dailogue.code500.code,
-          true,
-          {},
-          {},
-          {},
-          {
-            status: dailogue.code500.message,
-            message: err.message,
-          },
-        );
-      } else {
-        await responseFormat(
-          res,
-          dailogue.code500.code,
-          true,
-          {},
-          {},
-          {},
-          {
-            status: dailogue.code500.message,
-            message: 'Unknown error',
-          },
-        );
-      }
+      handleError(res, err, dailogue.code500.code);
     }
   }
   /**
@@ -103,33 +78,7 @@ export class Auth {
           });
         });
     } catch (err) {
-      if (err instanceof Error) {
-        await responseFormat(
-          res,
-          dailogue.code500.code,
-          true,
-          {},
-          {},
-          {},
-          {
-            status: dailogue.code500.message,
-            message: err.message,
-          },
-        );
-      } else {
-        await responseFormat(
-          res,
-          dailogue.code500.code,
-          true,
-          {},
-          {},
-          {},
-          {
-            status: dailogue.code500.message,
-            message: 'Unknown error',
-          },
-        );
-      }
+      handleError(res, err, dailogue.code500.code);
     }
   }
 }

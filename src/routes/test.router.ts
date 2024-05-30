@@ -1,5 +1,5 @@
 import express from 'express';
-import { amazonS3Upload } from '../utils';
+import { amazonS3Upload } from '../tools';
 
 const router = express.Router();
 router.post(

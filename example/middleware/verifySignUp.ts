@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { db } from '../../src/db';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
+import { handleError } from '../../src/utils/errorHandler';
 
 export class VerifySignUp {
   /**
@@ -46,7 +47,7 @@ export class VerifySignUp {
             });
         });
     } catch (err) {
-      res.status(dailogue.code500.code).send({ status: dailogue.code500.message, message: err });
+      handleError(res, err, dailogue.code500.code);
     }
   }
 }
