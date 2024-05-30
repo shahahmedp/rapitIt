@@ -1,10 +1,10 @@
 import express from 'express';
-//import { S3FileUpload } from '../utils';
+import { amazonS3Upload } from '../utils';
 
 const router = express.Router();
 router.post(
   '/try1',
-  //S3FileUpload.any(),
+  amazonS3Upload.any(),
   () => {
     console.log('its working');
   },

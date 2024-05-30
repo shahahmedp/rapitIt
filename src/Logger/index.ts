@@ -1,7 +1,8 @@
 import { devLogger } from './devLogger';
 import { Logger } from './logger';
+import { LoggerInterface } from './LoggerInterface';
 
-let logger: any = null;
+let logger: LoggerInterface;
 
 if (process.env.NODE_ENV === 'development') {
   logger = new devLogger();

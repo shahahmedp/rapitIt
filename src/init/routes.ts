@@ -1,11 +1,11 @@
 // @ts-check
-//import { Request, Response } from 'express';
+import { Express } from 'express';
 
 // Routes import
 import { router as Authentication } from '../routes/auth.routes';
 import { router as Test } from '../routes/test.router';
 
-const routes = (app: any): void => {
+const routes = (app: Express): void => {
   // Redirect to investigation endpoints
   app.use('/api/auth', Authentication);
   app.use('/api/test', Test);

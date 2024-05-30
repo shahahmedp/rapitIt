@@ -8,6 +8,7 @@
 
     "paths": {
       "@db/*": ["db/*"], // Define alias for db directory
+      "@config/*": ["config/*"], // Define alias for db directory
       "@utils/*": ["utils/*"], // Define alias for utils directory
       "@constants/*": ["constants/*"], // Define alias for constants directory
       "@controller/*": ["controller/*"], // Define alias for controller directory

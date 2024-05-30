@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import db from '../../src/db';
+import { db } from '../../src/db';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
 import { config } from '../../src/config/config';
@@ -29,19 +29,34 @@ export class Auth {
             message: `User ${req.body.username} was registered successfully`,
           });
         });
-    } catch (err: any | null) {
-      await responseFormat(
-        res,
-        dailogue.code500.code,
-        true,
-        {},
-        {},
-        {},
-        {
-          status: dailogue.code500.message,
-          message: err.message,
-        },
-      );
+    } catch (err) {
+      if (err instanceof Error) {
+        await responseFormat(
+          res,
+          dailogue.code500.code,
+          true,
+          {},
+          {},
+          {},
+          {
+            status: dailogue.code500.message,
+            message: err.message,
+          },
+        );
+      } else {
+        await responseFormat(
+          res,
+          dailogue.code500.code,
+          true,
+          {},
+          {},
+          {},
+          {
+            status: dailogue.code500.message,
+            message: 'Unknown error',
+          },
+        );
+      }
     }
   }
   /**
@@ -87,19 +102,34 @@ export class Auth {
             accessToken: token,
           });
         });
-    } catch (err: any) {
-      await responseFormat(
-        res,
-        dailogue.code500.code,
-        true,
-        {},
-        {},
-        {},
-        {
-          status: dailogue.code500.message,
-          message: err.message,
-        },
-      );
+    } catch (err) {
+      if (err instanceof Error) {
+        await responseFormat(
+          res,
+          dailogue.code500.code,
+          true,
+          {},
+          {},
+          {},
+          {
+            status: dailogue.code500.message,
+            message: err.message,
+          },
+        );
+      } else {
+        await responseFormat(
+          res,
+          dailogue.code500.code,
+          true,
+          {},
+          {},
+          {},
+          {
+            status: dailogue.code500.message,
+            message: 'Unknown error',
+          },
+        );
+      }
     }
   }
 }

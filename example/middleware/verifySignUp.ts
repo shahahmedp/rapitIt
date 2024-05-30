@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import db from '../../src/db';
+import { db } from '../../src/db';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
 
@@ -19,7 +19,7 @@ export class VerifySignUp {
         .findOne({
           where: { userName: req.body.username },
         })
-        .then((usr: any) => {
+        .then((usr: object) => {
           if (usr) {
             res.status(dailogue.code400.code).send({
               status: dailogue.code400.message,
@@ -34,7 +34,7 @@ export class VerifySignUp {
                 email: req.body.email,
               },
             })
-            .then((user: any) => {
+            .then((user: object) => {
               if (user) {
                 res.status(dailogue.code400.code).send({
                   status: dailogue.code400.message,
@@ -45,7 +45,7 @@ export class VerifySignUp {
               next();
             });
         });
-    } catch (err: any) {
+    } catch (err) {
       res.status(dailogue.code500.code).send({ status: dailogue.code500.message, message: err });
     }
   }

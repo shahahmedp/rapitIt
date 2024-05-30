@@ -1,4 +1,6 @@
-module.exports = function (app: any): void {
+import { Express } from 'express';
+
+module.exports = function (app: Express): void {
   /**
    *  all routes imported and exported here .
    *

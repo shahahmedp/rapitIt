@@ -3,9 +3,12 @@ import fs from 'fs';
 import path from 'path';
 import { associationModels } from './association';
 import { config } from '../../config/config';
+import { postgresDbInterface } from '@db/db.interface';
+
 const Sequelize = require('sequelize');
+
 const basename = path.basename(__filename);
-const db: any = {};
+const db: postgresDbInterface = {};
 
 export const initPostgres = async () => {
   const sequelize = new Sequelize(config.dbConfig.database, config.dbConfig.username, config.dbConfig.password, {

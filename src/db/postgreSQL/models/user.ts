@@ -1,50 +1,58 @@
 /* eslint-disable @typescript-eslint/ban-types */
 'use strict';
-import { Model, UUIDV4 } from 'sequelize';
+import { Model, UUIDV4, Sequelize, DataTypes } from 'sequelize';
+
 interface UserAttributes {
-  id: String;
-  userName: String;
-  email: String;
-  password: String;
+  id: string;
+  userName: string;
+  email: string;
+  password: string;
 }
-module.exports = (sequelize: any, DataTypes: any) => {
+
+module.exports = (sequelize: Sequelize, DataType: typeof DataTypes) => {
   class User extends Model<UserAttributes> implements UserAttributes {
+    public id!: string;
+    public userName!: string;
+    public email!: string;
+    public password!: string;
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    id!: String;
-    userName!: String;
-    email!: String;
-    password!: String;
+    // static associate(models: any) {
+    //   // define association here
+    // }
   }
+
   User.init(
     {
       id: {
-        type: DataTypes.UUID,
+        type: DataType.UUID,
         defaultValue: UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
       userName: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false,
       },
       email: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false,
         unique: true,
       },
       password: {
-        type: DataTypes.STRING,
+        type: DataType.STRING,
         allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'user',
+      modelName: 'User',
     },
   );
+
   return User;
 };

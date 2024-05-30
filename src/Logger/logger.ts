@@ -1,6 +1,6 @@
 import winston, { createLogger, format, transports } from 'winston';
-
-export class Logger {
+import { LoggerInterface } from './LoggerInterface';
+export class Logger implements LoggerInterface {
   private logger: winston.Logger;
 
   constructor() {
@@ -8,7 +8,8 @@ export class Logger {
       transports: [
         new transports.Console(),
         new transports.File({ filename: './src/db/logs/default/error.log', level: 'error' }),
-        new transports.File({ filename: './src/db/logs/default/combined.log', level: 'info' }),
+        new transports.File({ filename: './src/db/logs/default/info.log', level: 'info' }),
+        new transports.File({ filename: './src/db/logs/default/warn.log', level: 'warn' })
       ],
       format: format.combine(
         format.colorize(),
@@ -19,11 +20,19 @@ export class Logger {
       ),
     });
   }
+  log(message: string): void {
+    console.log(message);
+  }
+
   info(message: string): void {
     this.logger.info(message);
   }
 
-  error(message: { error: string }): void {
+  warn(message: string): void {
+    this.logger.warn(message);
+  }
+
+  error(message: object): void {
     this.logger.error(message);
   }
 }

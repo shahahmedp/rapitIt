@@ -44,7 +44,7 @@ export class AuthJwt {
         {},
         {
           status: dailogue.code500.message,
-          message: err.message,
+          message: err,
         },
       );
     }
