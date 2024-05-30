@@ -7,7 +7,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db: any = {};
 
-export const initPostgres  = async () => {
+export const initPostgres = async () => {
   const sequelize = new Sequelize(config.dbConfig.database, config.dbConfig.username, config.dbConfig.password, {
     host: config.dbConfig.host,
     dialect: config.dbConfig.dialect,

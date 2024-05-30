@@ -17,7 +17,7 @@ export class ValidatorFunc {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(dailogue.code400.code).json({ statuss: dailogue.code400.message, message: errors });
-      return ;
+      return;
     } else {
       next();
     }

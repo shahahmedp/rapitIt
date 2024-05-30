@@ -169,7 +169,7 @@ const initialInquire = async () => {
 initialInquire();
 
 function removePath(targetPath) {
-  console.log("removePath", targetPath);
+  console.log("removePath 1", targetPath);
   if (fs.existsSync(targetPath)) {
     if (fs.lstatSync(targetPath).isDirectory()) {
       fs.readdirSync(targetPath).forEach((file) => {
@@ -179,10 +179,14 @@ function removePath(targetPath) {
         } else {
           fs.unlinkSync(curPath);
         }
+        console.log("removePath 2", targetPath);
       });
+      console.log("removePath 3", targetPath);
       fs.rmdirSync(targetPath);
     } else {
+      console.log("removePath 4", targetPath);
       fs.unlinkSync(targetPath);
     }
   }
+  console.log("removePath 12", fs.existsSync(targetPath));
 }

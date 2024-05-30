@@ -28,5 +28,5 @@ export function generateSixDigitOTP() {
   return Math.floor(Math.random() * 900000) + 100000;
 }
 
-export { amazonS3Upload }
-export { emailNodemailer }
+export { amazonS3Upload };
+export { emailNodemailer };

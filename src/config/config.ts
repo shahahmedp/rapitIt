@@ -6,7 +6,7 @@ require('dotenv').config({
 export const config = {
   PORT: process.env.PORT,
   dbConfig: {
-    type: 'postgresSQL', 
+    type: 'postgreSQL',
     username: process.env.PG_DB_USER,
     password: process.env.PG_DB_PASSWORD,
     database: process.env.DB_NAME,

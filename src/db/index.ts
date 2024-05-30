@@ -1,10 +1,10 @@
 import { config } from '../config/config';
-import { initPostgres, db as postgresDb } from './postgresSQL/index';
+import { initPostgres, db as postgresDb } from './postgreSQL';
 import { initMongo } from './mongoDB/index';
 import mongoose from 'mongoose';
 
 const dbInit = async () => {
-  if (config.dbConfig.type === 'postgresSQL') {
+  if (config.dbConfig.type === 'postgreSQL') {
     await initPostgres();
     return postgresDb;
   } else if (config.dbConfig.type === 'mongoDB') {

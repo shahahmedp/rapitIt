@@ -24,7 +24,7 @@ const userSchema: Schema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const User: Model<UserAttributes> = mongoose.model<UserAttributes>('User', userSchema);

@@ -1,3 +1,3 @@
-import { thirdPartyMiddlewares } from "./middleware";
+import { thirdPartyMiddlewares } from './middleware';
 
 export { thirdPartyMiddlewares };

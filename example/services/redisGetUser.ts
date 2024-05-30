@@ -3,12 +3,12 @@
 
 // const getUser = (userId: string, callback: { (err: any, user: any): void; (arg0: null, arg1: undefined): any; }) => {
 //   const cacheKey = `user:${userId}`;
-  
+
 //   getCache(cacheKey, (err: any, data: string) => {
 //     if (err) {
 //       return callback(err);
 //     }
-    
+
 //     if (data) {
 //       return callback(null, JSON.parse(data));
 //     }
