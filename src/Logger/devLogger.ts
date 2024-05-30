@@ -1,5 +1,5 @@
 import winston, { createLogger, format, transports } from 'winston';
-import { LoggerInterface } from './LoggerInterface';
+import { LoggerInterface } from '../types';
 const path = process.env.NODE_ENV;
 export class devLogger implements LoggerInterface {  private logger: winston.Logger;
 

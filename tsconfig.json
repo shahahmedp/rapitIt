@@ -3,16 +3,24 @@
     // ECMAScript related options
     "target": "ES2020",
     "module": "commonjs",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "outDir": "./build",
 
     "paths": {
-      "@db/*": ["db/*"], // Define alias for db directory
-      "@config/*": ["config/*"], // Define alias for db directory
-      "@utils/*": ["utils/*"], // Define alias for utils directory
-      "@constants/*": ["constants/*"], // Define alias for constants directory
-      "@controller/*": ["controller/*"], // Define alias for controller directory
-      "@middlewares/*": ["middlewares/*"] // Define alias for constants directory
+      "@db/*": ["src/db/*"], // Define alias for db directory
+      "@config/*": ["src/config/*"], // Define alias for config directory
+      "@assets/*": ["src/assets/*"], // Define alias for assets directory
+      "@utils/*": ["src/utils/*"], // Define alias for utils directory
+      "@constants/*": ["src/constants/*"], // Define alias for constants directory
+      "@controller/*": ["src/controller/*"], // Define alias for controller directory
+      "@middlewares/*": ["src/middlewares/*"], // Define alias for constants directory
+      "@init/*": ["src/init/*"], // Define alias for init directory
+      "@Logger/*": ["src/Logger/*"], // Define alias for Logger directory
+      "@Sanitization/*": ["src/payloadValidation/*"], // Define alias for Sanitization directory
+      "@public/*": ["src/public/*"], // Define alias for public directory
+      "@routes/*": ["src/routes/*"], // Define alias for rotes directory
+      "@type/*": ["src/types/*"], // Define alias for Sanitization directory
+      "@example/*": ["example/*"], // Define alias for example directory
     },
     "lib":[
      "ES2020" 

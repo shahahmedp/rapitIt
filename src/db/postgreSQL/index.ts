@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { associationModels } from './association';
 import { config } from '../../config/config';
-import { postgresDbInterface } from '@db/db.interface';
+import { postgresDbInterface } from '../../types';
 
 const Sequelize = require('sequelize');
 

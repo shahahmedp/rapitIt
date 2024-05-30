@@ -1,6 +1,6 @@
 import { devLogger } from './devLogger';
 import { Logger } from './logger';
-import { LoggerInterface } from './LoggerInterface';
+import { LoggerInterface } from '../types';
 
 let logger: LoggerInterface;
 

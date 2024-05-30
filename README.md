@@ -6,13 +6,10 @@ This project contains the backend code for the rapid_it coding assigment.
 
 - Used Typescript in the project
 - Implemented Sequelize
-- ROle based access JWT authentication for admin, company and user 
 - Used Node, Express, Sequelize, JWT, ESlint, Winston Logger, express-validator, module aliasing, postrgres
-- Created Express routing to demonstrate CRUD functionality (Create / Read / Update / Delete) for two API items: Companies and Employees
 - Used Express validation middleware to demonstrate basic payload validation
-- Used Express middleware  for authorising to enforce authorisation,company or user,
-- Companies DB table consists of these fields: Name (required), email, phone, website
-- Employees DB table consists of these fields: First name (required), last name (required), Company (foreign key to Companies), email, phone
+- Used Express middleware  for authorising to enforce authorisation,user,
+(foreign key to Companies), email, phone
 - User DB table (Additional table to enforce log in as admin functionality)
 
 ## Important Instructions

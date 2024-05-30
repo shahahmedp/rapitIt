@@ -1,5 +1,5 @@
 import winston, { createLogger, format, transports } from 'winston';
-import { LoggerInterface } from './LoggerInterface';
+import { LoggerInterface } from '../types';
 export class Logger implements LoggerInterface {
   private logger: winston.Logger;
 
