@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 // Types import
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { transporter } from '../config/emailNodemailerTransPorter';
-import { config } from '../config/config';
+import { nodemailerConfig } from '../config/config';
 import { IMailOptions, IMailResponseType } from '../types';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
@@ -11,7 +11,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 export const emailNodemailer = async (receiver: string, subject: string, body?: string): Promise<IMailResponseType> => {
   try {
     const mailOptions: IMailOptions = {
-      from: config.nodemailerConfig.sender, //Sender Address
+      from: nodemailerConfig.sender, //Sender Address
       to: receiver, //Receiver's Address
       subject: subject,
       html:

@@ -6,36 +6,101 @@ import { ValidatorFunc } from '../../example/middleware/ValidatorFunc';
 const router = express.Router();
 
 /**
- * This routing method to regsiter the user.
- *
- * @param req
- * @param res
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       required:
+ *         - username
+ *         - email
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: The user's username
+ *         email:
+ *           type: string
+ *           description: The user's email
+ *         password:
+ *           type: string
+ *           description: The user's password
+ *       example:
+ *         username: johndoe
+ *         email: johndoe@example.com
+ *         password: password123
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: The authentication managing API
+ */
+
+/**
+ * @swagger
+ * /api/auth/signup:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: User registered successfully
+ *       400:
+ *         description: Bad request
+ */
+
+/**
+ * @swagger
+ * /api/auth/signin:
+ *   post:
+ *     summary: Login a user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The user's email
+ *               password:
+ *                 type: string
+ *                 description: The user's password
+ *             example:
+ *               email: johndoe@example.com
+ *               password: password123
+ *     responses:
+ *       200:
+ *         description: User logged in successfully
+ *       400:
+ *         description: Bad request
  */
 
 router.post(
-  //path
   '/signup',
-  //check data payload
   registerCheck,
   ValidatorFunc.validator,
-  //middlewares to verify
   [VerifySignUp.checkUsernameOrEmailExist],
-  // controllers
   Auth.signUp,
 );
-/**
- * This routing method to login the user.
- *
- * @param req
- * @param res
- */
 
 router.post(
   '/signin',
-  //payload check
   signInCheck,
   ValidatorFunc.validator,
-  //controller
   Auth.signIn,
 );
 

@@ -1,5 +1,5 @@
 import ip from 'ip';
-import { config } from '../config/config';
+import { nodemailerConfig } from '../config/config';
 import { handleError } from './errorHandler';
 import { responseFormat } from './responseFormat';
 
@@ -9,17 +9,17 @@ export const getHostUrl = (attachProtocol: boolean): string => {
   const nodeEnv = process.env.NODE_ENV || 'development';
   if (nodeEnv === 'development') {
     serverUrl = 'localhost';
-  } else if (nodeEnv === 'production' && config.nodemailerConfig.prodDomain !== '') {
-    serverUrl = config.nodemailerConfig.prodDomain;
-  } else if (nodeEnv === 'production' && config.nodemailerConfig.prodDomain === '') {
+  } else if (nodeEnv === 'production' && nodemailerConfig.prodDomain !== '') {
+    serverUrl = nodemailerConfig.prodDomain;
+  } else if (nodeEnv === 'production' && nodemailerConfig.prodDomain === '') {
     serverUrl = ip.address();
   }
 
-  serverUrl = attachProtocol ? `${config.nodemailerConfig.protocol}://${serverUrl}` : serverUrl;
+  serverUrl = attachProtocol ? `${nodemailerConfig.protocol}://${serverUrl}` : serverUrl;
 
   serverUrl =
-    config.nodemailerConfig.includePortInDomain === 'YES'
-      ? `${serverUrl}:${config.nodemailerConfig.serverPort}`
+    nodemailerConfig.includePortInDomain === 'YES'
+      ? `${serverUrl}:${nodemailerConfig.serverPort}`
       : serverUrl;
 
   return serverUrl;

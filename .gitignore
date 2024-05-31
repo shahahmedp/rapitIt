@@ -2,6 +2,7 @@
 bin
 node_modules
 .env
+env/*
 *.log
 build
 emquirer

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { db } from '../../src/db';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
-import { config } from '../../src/config/config';
+import { secretKey } from '../../src/config/config';
 import { responseFormat } from '../../src/utils';
 import { handleError } from '../../src/utils';
 const jwt = require('jsonwebtoken');
@@ -66,8 +66,8 @@ export class Auth {
             return;
           }
           //generating jwt token to send response
-          const token = jwt.sign({ id: user?.id }, config.secretKey.secret, {
-            expiresIn: config.secretKey.expiresIn, // 24 hours
+          const token = jwt.sign({ id: user?.id }, secretKey.secret, {
+            expiresIn: secretKey.expiresIn, // 24 hours
           });
           await responseFormat(res, dailogue.code200.code, true, {
             status: dailogue.code200.message,

@@ -1,15 +1,15 @@
 import winston, { createLogger, format, transports } from 'winston';
 import { LoggerInterface } from '../types';
-export class Logger implements LoggerInterface {
-  private logger: winston.Logger;
+const path = process.env.NODE_ENV;
+export class Logger implements LoggerInterface {  private logger: winston.Logger;
 
   constructor() {
     this.logger = createLogger({
       transports: [
         new transports.Console(),
-        new transports.File({ filename: './src/db/logs/default/error.log', level: 'error' }),
-        new transports.File({ filename: './src/db/logs/default/info.log', level: 'info' }),
-        new transports.File({ filename: './src/db/logs/default/warn.log', level: 'warn' })
+        new transports.File({ filename: './src/db/logs/' + path + '/error.log', level: 'error' }),
+        new transports.File({ filename: './src/db/logs/' + path + '/info.log', level: 'info' }),
+        new transports.File({ filename: './src/db/logs/' + path + '/warn.log', level: 'warn' }),
       ],
       format: format.combine(
         format.colorize(),

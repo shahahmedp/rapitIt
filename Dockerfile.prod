@@ -8,16 +8,16 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm install --only=production
+RUN yarn install --only=production
 
 # Copy the rest of the application
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN yarn run build
 
 # Expose the port the app runs on
 EXPOSE 3000
 
 # Command to start the application
-CMD ["npm", "run", "serve:prod"]
+CMD ["yarn", "run", "serve:prod"]

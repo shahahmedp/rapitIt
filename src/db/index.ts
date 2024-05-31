@@ -1,4 +1,4 @@
-import { config } from '../config/config';
+import { dbConfig } from '../config/config';
 import { initPostgres, db as postgresDb } from './postgreSQL';
 import { initMongo } from './mongoDB/index';
 import mongoose from 'mongoose';
@@ -9,10 +9,10 @@ import mongoose from 'mongoose';
 
 let db: any//postgresDbInterface| void; // | mongoDbInterface 
 const dbInit = async () => {
-  if (config.dbConfig.type === 'postgreSQL') {
+  if (dbConfig.type === 'postgreSQL') {
     db = await initPostgres();
     return postgresDb;
-  } else if (config.dbConfig.type === 'mongoDB') {
+  } else if (dbConfig.type === 'mongoDB') {
     db = await initMongo();
     return mongoose; // or return any MongoDB-specific DB object if needed
   } else {

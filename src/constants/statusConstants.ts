@@ -30,3 +30,9 @@ export class StatusConstants {
     return status ? status.message : 'Error';
   }
 }
+
+export const environment = {
+  development:"development",
+  production: "production",
+  testing:"testing",
+}

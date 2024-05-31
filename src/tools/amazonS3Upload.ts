@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { config } from '../config/config';
+import { awsS3Bucket } from '../config/config';
 import fs from 'fs-extra';
 import multer from 'multer';
 
@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     // Create the uploads folder if it doesn't exist
     const { customerId, orderId } = req.query;
     // Create the uploads folder if it doesn't exist
-    const uploadDir = config.awsS3Bucket;
+    const uploadDir = awsS3Bucket;
 
     // Create folder structure based on customerId/orderNo
     const parentDir = `${uploadDir}/${customerId}`;

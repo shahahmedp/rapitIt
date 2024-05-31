@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { config } from '../../src/config/config';
+import { secretKey } from '../../src/config/config';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
 import { handleError } from '../../src/utils';
@@ -26,7 +26,7 @@ export class AuthJwt {
         });
       }
       //verify token
-      jwt.verify(token.toString(), config.secretKey.secret, (err: Error | null, decoded: string) => {
+      jwt.verify(token.toString(), secretKey.secret, (err: Error | null, decoded: string) => {
         if (err) {
           return res.status(dailogue.code401.code).send({ status: dailogue.code401.message, message: 'Unauthorized' });
         } else {

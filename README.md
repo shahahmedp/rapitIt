@@ -1,55 +1,68 @@
 # rapid_it coding assignment
 
-This project contains the backend code for the rapid_it coding assigment.
+The Auto Repo backend setup tool is a command-line interface (CLI) designed to automate the configuration of a development environment. It simplifies the process by guiding the user through selecting and configuring various tools and services, reducing setup time from hours to minutes.
 
 ## Features covered
 
-- Used Typescript in the project
+- Used TypeScript in the project
 - Implemented Sequelize
-- Used Node, Express, Sequelize, JWT, ESlint, Winston Logger, express-validator, module aliasing, postrgres
+- Used Node.js, Express, Sequelize, JWT, ESLint, Winston  Logger, express-validator, module aliasing, PostgreSQL
 - Used Express validation middleware to demonstrate basic payload validation
-- Used Express middleware  for authorising to enforce authorisation,user,
-(foreign key to Companies), email, phone
-- User DB table (Additional table to enforce log in as admin functionality)
+- Used Express middleware for authorizing and enforcing authorization for users, including admin functionality
+- User DB table to enforce login as admin functionality
 
 ## Important Instructions
 - This Repo is used to generate requirement basis tools and configuration set up with user cmd interface. 
 - This Repo is built with multiple tools of choice. Please setup based on your requirement in the system before installing and running the project.
 - After selecting all the necessary tools and db's in the system, create a database inside names of your choice.
 
-Please update the env with following info
 **src/configs/config.ts file**
 
-| key        | Type     | Description                       |
-| :--------- | :------- | :---------------------------------|
-| `database` | `string` | **Your  database name**.  |
-| `username` | `string` | **Your username**                 |
-| `password` | `string` | **Your password**.                |
-| `redis_URL` | `string` | **Your redis url**.              |
-| `redis_password` | `string` | **Your redis password**.    |
+| Key                  | Type     | Description                       |
+| :------------------- | :------- | :---------------------------------|
+| `PORT`               | `string` | **Your server port**.             |
+| `PG_DB_USER`         | `string` | **Your PostgreSQL username**.     |
+| `PG_DB_PASSWORD`     | `string` | **Your PostgreSQL password**.     |
+| `DB_NAME`            | `string` | **Your database name**.           |
+| `MONGO_URI`          | `string` | **Your MongoDB URI**.             |
+| `REDIS_URL`          | `string` | **Your Redis URL**.               |
+| `REDIS_PASSWORD`     | `string` | **Your Redis password**.          |
+| `IMAGE_UPLOAD`       | `string` | **Your AWS S3 bucket name**.      |
+| `INCLUDE_PORT_IN_NODE_DOMAIN` | `string` | **Include port in node domain**. |
+| `DEFAULT_NODE_PROTOCOL` | `string` | **Default node protocol**.       |
+| `SERVER_URL`         | `string` | **Your server URL**.              |
+| `NODE_DOMAIN_NAME`   | `string` | **Your node domain name**.        |
+| `SMTP_HOST`          | `string` | **Your SMTP host**.               |
+| `SMTP_PORT`          | `string` | **Your SMTP port**.               |
+| `MAILING_USERNAME`   | `string` | **Your mailing username**.       |
+| `MAILING_PASSWORD`   | `string` | **Your mailing password**.       |
+| `SENDER_INFO`        | `string` | **Your sender info**.             |
+| `APP_SECRET`         | `string` | **Your application secret**.      |
+| `EXPIRES_IN`         | `string` | **Token expiration time**.        |
 
-- All api reference is given in bellow and to ease API testing there is a POSTMAN api JSON file added in the root of the project **(/postman/rapid_it-apis.postman_collection.json)** directory. Import this file in the POSTMAN application and test the API with pre-loaded data. More info about API's is given in the API Reference section.
-
-- you can find the server logs under consoleLogs folder under the src directory.
+- you can find the server logs under /db/logs.
 
 ## Environment Variables
+- Please update the .env files inside env folder  with the following information (refer to src/configs/config.ts):
 
-To run this project, you will need to add the following environment variables to your .env file
-
-`SECRET="shah@123"`
+- You need to create and files in folder name as env and inside of it need to create files based on environment and add this key value such as in .env.example in root directory and files should be properly named such as  
+  - .env
+  - development.env
+  - stage.env
+  - testing.env
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone -b main https://github.com/shahahmedp/rapid_it-.git
+  npx run rapiit
 ```
 
 Go to the project directory
 
 ```bash
-  cd rapid_itBackedn
+  cd "repo"
 ```
 
 Install dependencies
@@ -57,17 +70,27 @@ Install dependencies
 ```bash
   yarn install
 ```
+## Run
 
 Run the server locally in development
 
 ```bash
-  yarn run dev
+  yarn serve:test
+  yarn serve:dev
+  yarn 
 ```
+## Testing
+ Test the api's with this cmds
 
+ ```bash
+  yarn test:devENV
+  yarn test:testENV
+  yarn test:watch
+ ```
 ## Build
 
 ```bash
-  yarn run build
+  yarn build
 ```
 
 ## Start
@@ -75,210 +98,12 @@ Run the server locally in development
 Run the server after running the build.
 
 ```bash
-  yarn start
+    yarn serve:prod
 ```
 
 ## Tech Stack
 
 **Server:** Node, Express, Sequelize, JWT, Eslint, prettier, Winston
-
-## API Reference
-
-### Auth API
-
-#### Signup user
-
-```http
-  POST http://localhost:3000/api/auth/signup
-```
-
-| Body Payload | Type     | Description                                |
-| :----------- | :------- | :----------------------------------------- |
-| `username`  | `string` | **Required**.                              |
-| `email`      | `string` | **Required**.                              |
-| `password`   | `string` | **Required**.                              |
-| `role`       | `array of strings` | **OPTIONAL: Admin/Company/user**. Defaults. GUEST |
-
-#### Signin user
-
-```http
-  POST http://localhost:3000/api/auth/signin
-```
-
-| Body Payload | Type     | Description   |
-| :----------- | :------- | :------------ |
-| `username`      | `string` | **Required**. |
-| `password`   | `string` | **Required**. |
-
-### Company API
-
-All the company API requires Authorisation header containing Bearer Token(x-access-token)
-
-- use the Signin API shown above to generate the token.
-  | Headers | Type | value |
-  | :-------- | :------- | :------------------------- |
-  | `Content-Type` | `string` | **application/json**. |
-  | `Authorization` | `string` | **Bearer [x-access-token]**. |
-
-#### Create a new company
-
-```http
-  POST http://localhost:3000/api/post/cmpy
-```
-
-| Body Payload | Type     | Description   |
-| :----------- | :------- | :------------ |
-| `name`       | `string` | **Required**. |
-| `email`      | `string` | **Required**. |
-| `phone`      | `string` | **OPTIONAL**. |
-| `website`    | `string` | **OPTIONAL**. |
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Get all companies
-
-```http
-  GET http://localhost:3000/api/get/cmpy
-```
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Get company by company id.
-
-```http
-  GET http://localhost:3000/api/getbyid/cmpy/:name
-```
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Update company by company id.
-
-```http
-  PUT http://localhost:3000/api/putbyid/cmpy/:companyId
-```
-
-| Body Payload | Type     | Description   |
-| :----------- | :------- | :------------ |
-| `name`       | `string` | **OPTIONAL**. |
-| `email`      | `string` | **OPTIONAL**. |
-| `phone`      | `string` | **OPTIONAL**. |
-| `website`    | `string` | **OPTIONAL**. |
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Delete company by company id.
-
-```http
-  DELETE http://localhost:3000/api/deleteById/cmpy:companyId
-```
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-### Employee API
-
-All the employee API requires Authorisation header containing Bearer Token and Content-Type header
-
-- use the Signin API shown above to generate the token.
-  | Headers | Type | value |
-  | :-------- | :------- | :------------------------- |
-  | `Content-Type` | `string` | **application/json**. |
-  | `Authorization` | `string` | **Bearer [x-access-token]**. |
-
-#### Create a new employee
-
-```http
-  POST http://localhost:3000/api/post/emp
-```
-
-| Body Payload | Type     | Description   |
-| :----------- | :------- | :------------ |
-| `cmpID`        | `string` | **Required**. |
-| `firstName`  | `string` | **Required**. |
-| `lastName`   | `string` | **Required**. |
-| `email`      | `string` | **Required**. |
-| `phone`      | `string` | **OPTIONAL**. |
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Get all employees
-
-```http
-  GET http://localhost:3000/api/get/emp
-```
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Get employee by employee id.
-
-```http
-  GET http://localhost:3000/api/getbyid/emp/:employeeId
-```
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Get employee by company id.
-
-```http
-  GET http://localhost:3000/api/company/:companyId/employees
-```
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Update employee by employee id.
-
-```http
-  put http://localhost:3000/api/putbyid/emp/:employeeId
-```
-
-| Body Payload | Type     | Description   |
-| :----------- | :------- | :------------ |
-| `firstName`  | `string` | **OPTIONAL**. |
-| `lastName`   | `string` | **OPTIONAL**. |
-| `email`      | `string` | **OPTIONAL**. |
-| `phone`      | `string` | **OPTIONAL**. |
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
-
-#### Delete employee by employee id.
-
-```http
-  DELETE http://localhost:3000/api/deleteById/emp/:employeeId
-```
-
-| Headers         | Type     | Description   |
-| :-------------- | :------- | :------------ |
-| `Content-Type`  | `string` | **Required**. |
-| `Authorization` | `string` | **Required**. |
 
 ## Author
 
