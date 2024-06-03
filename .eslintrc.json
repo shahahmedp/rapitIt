@@ -4,36 +4,24 @@
     "es2021": true
   },
   "extends": [
-    // Use Prettier recommended settings
-    "plugin:prettier/recommended",
-    // Use ESLint recommended settings
-    "eslint:recommended",
-    // Use TypeScript ESLint recommended settings
-    "plugin:@typescript-eslint/recommended"
-    // "plugin:import/errors",
-    // "plugin:import/warnings"
+    "plugin:prettier/recommended", // Use Prettier recommended settings
+    "eslint:recommended", // Use ESLint recommended settings
+    "plugin:@typescript-eslint/recommended" // Use TypeScript ESLint recommended settings
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    // Use TypeScript project configuration
-    "project": "./tsconfig.json",
+    "project": "./tsconfig.json", // Use TypeScript project configuration
     "ecmaVersion": 12,
     "sourceType": "module"
   },
   "plugins": [
-    // Use TypeScript ESLint plugin
+    "@typescript-eslint", // Use TypeScript ESLint plugin
     "jest",
     "prettier"
   ],
   "rules": {
-    "semi": [
-      "error",
-      "always"
-    ], // Semicolons required at the end of statements
-    "indent": [
-      "error",
-      2
-    ], // Indentation size of 2 spaces
+    "semi": ["error", "always"], // Semicolons required at the end of statements
+    "indent": ["error", 2], // Indentation size of 2 spaces
     "camelcase": "error", // Variables must use camelCase
     "prettier/prettier": "error", // Ensure code formatting consistency with Prettier
     "object-shorthand": "off", // Use object shorthand when possible
@@ -41,14 +29,8 @@
     "arrow-spacing": "error", // Ensure proper spacing around arrow functions
     "no-trailing-spaces": "error", // No trailing spaces allowed
     "prefer-const": "error", // Prefer using const for variable declarations
-    "func-names": [
-      "error",
-      "always"
-    ], // Require function names
-    "space-before-blocks": [
-      "error",
-      "always"
-    ], // Require space before blocks
+    "func-names": ["error", "always"], // Require function names
+    "space-before-blocks": ["error", "always"], // Require space before blocks
     "prefer-destructuring": "off", // Disable preference for object destructuring
     "prefer-template": "off", // Disable preference for template literals
     "global-require": "off", // Allow dynamic requires
@@ -69,16 +51,16 @@
     "security/detect-non-literal-fs-filename": "off", // Allow non-literal file system filenames
     "security/detect-child-process": "off", // Allow child processes
     "no-underscore-dangle": "off", // Allow underscores in identifiers
-    "@typescript-eslint/no-explicit-any": 2, // Disable explicit any type
-    "@typescript-eslint/no-unused-vars": "error", // Disable unused variables check
-    "@typescript-eslint/no-var-requires": "error",
-    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-explicit-any": "error", // Disallow explicit any type
+    "@typescript-eslint/no-unused-vars": "error", // Disallow unused variables
+    "@typescript-eslint/no-var-requires": "error", // Disallow require statements except in import statements
+    "@typescript-eslint/ban-ts-comment": "off", // Allow @ts-comment directives
     "max-len": [
       "error",
       {
-        "code": 150,
+        "code": 150, // Maximum line length of 150 characters
         "ignoreComments": true
       }
-    ] // Maximum line length of 125 characters
+    ]
   }
 }

@@ -15,10 +15,7 @@
     "test:watch": "yarn test:devENV -- --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts)\"",
-    "docker:dev": "DOCKERFILE=Dockerfile.dev NODE_ENV=development docker-compose up --build",
-    "docker:prod": "DOCKERFILE=Dockerfile.prod NODE_ENV=production docker-compose up --build",
-    "docker:test": "DOCKERFILE=Dockerfile.test NODE_ENV=testing docker-compose up --build"
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(ts)\""
   },
   "husky": {
     "hooks": {
