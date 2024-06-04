@@ -4,7 +4,7 @@ import { redisClient } from '../config/redisClient';
 export const setCache = async (key: string, value: string, expirationInSeconds: number) => {
   try {
     await redisClient.set(key, value, {
-      EX: expirationInSeconds,
+      EX: expirationInSeconds
     });
     console.log(`Cache set for key: ${key}`);
   } catch (err) {

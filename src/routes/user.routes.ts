@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import express from 'express';
+import express, { Request, Response } from 'express';
+
 import { AuthJwt } from '../../example/middleware/authjwt';
 
 const router = express.Router();
@@ -27,12 +27,8 @@ const router = express.Router();
  *       403:
  *         description: Forbidden
  */
-router.post(
-  '/api/test/all', 
-  [AuthJwt.VerifyToken], 
-  (_req: Request, res: Response) => {
-    res.send('Token authentication successful');
-  }
-);
+router.post('/api/test/all', [AuthJwt.VerifyToken], (_req: Request, res: Response) => {
+  res.send('Token authentication successful');
+});
 
 export { router };

@@ -1,7 +1,8 @@
 import { Request } from 'express';
-import { awsS3Bucket } from '../config/config';
 import fs from 'fs-extra';
 import multer from 'multer';
+
+import { awsS3Bucket } from '../config/config';
 
 const storage = multer.diskStorage({
   destination: (req: Request, _file: Express.Multer.File, cb: (arg0: null, arg1: string) => void) => {
@@ -22,7 +23,7 @@ const storage = multer.diskStorage({
   filename: (_req: Request, file: { originalname: string }, cb: (arg0: null, arg1: string) => void) => {
     // Rename the file to avoid conflicts
     cb(null, Date.now() + '-' + file.originalname);
-  },
+  }
 });
 
 // Initialize multer with the defined storage
@@ -31,5 +32,5 @@ export const amazonS3Upload = multer({
   fileFilter: (_req, _file, cb) => {
     // Allow all files to be uploaded
     cb(null, true);
-  },
+  }
 });

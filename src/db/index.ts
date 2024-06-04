@@ -1,13 +1,15 @@
-import { dbConfig } from '../config/config';
-import { initPostgres, db as postgresDb } from './postgreSQL';
-import { initMongo } from './mongoDB/index';
 import mongoose from 'mongoose';
-// import { 
-//   postgresDbInterface, 
-//   //mongoDbInterface 
+
+import { dbConfig } from '../config/config';
+
+import { initMongo } from './mongoDB/index';
+import { db as postgresDb, initPostgres } from './postgreSQL';
+// import {
+//   postgresDbInterface,
+//   //mongoDbInterface
 // } from '@db/db.interface';
 
-let db: any//postgresDbInterface| void; // | mongoDbInterface 
+let db: any; //postgresDbInterface| void; // | mongoDbInterface
 const dbInit = async () => {
   if (dbConfig.type === 'postgreSQL') {
     db = await initPostgres();
@@ -20,4 +22,4 @@ const dbInit = async () => {
   }
 };
 
-export { dbInit, db };
+export { db, dbInit };

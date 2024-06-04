@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-types */
 'use strict';
-import { Model, UUIDV4, Sequelize, DataTypes } from 'sequelize';
+import { DataTypes, Model, Sequelize, UUIDV4 } from 'sequelize';
 
 interface UserAttributes {
   id: string;
@@ -32,26 +31,26 @@ module.exports = (sequelize: Sequelize, DataType: typeof DataTypes) => {
         type: DataType.UUID,
         defaultValue: UUIDV4,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       userName: {
         type: DataType.STRING,
-        allowNull: false,
+        allowNull: false
       },
       email: {
         type: DataType.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       password: {
         type: DataType.STRING,
-        allowNull: false,
-      },
+        allowNull: false
+      }
     },
     {
       sequelize,
-      modelName: 'User',
-    },
+      modelName: 'User'
+    }
   );
 
   return User;

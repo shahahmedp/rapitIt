@@ -1,15 +1,16 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import 'reflect-metadata';
 import { response } from 'express';
+
+import 'reflect-metadata';
+
+import { config } from './config/config';
+import { StatusConstants as dailogue } from './constants/statusConstants';
+import { dbInit } from './db/index';
 import { app } from './app';
 import { logger } from './Logger';
-import { config } from './config/config';
-import { dbInit } from './db/index';
 import { handleError } from './utils';
-import { StatusConstants as dailogue } from "./constants/statusConstants"
 // Load environment variables from .env file
 require('dotenv').config({
-  path: process.env.NODE_ENV ? `./env/${process.env.NODE_ENV}.env` : `./env/.env`,
+  path: process.env.NODE_ENV ? `./env/${process.env.NODE_ENV}.env` : `./env/.env`
 });
 
 const PORT = config.PORT;

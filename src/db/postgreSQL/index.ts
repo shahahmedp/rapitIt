@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from 'fs';
 import path from 'path';
-import { associationModels } from './association';
+
 import { dbConfig } from '../../config/config';
 import { postgresDbInterface } from '../../types';
+
+import { associationModels } from './association';
 
 const Sequelize = require('sequelize');
 
@@ -15,16 +16,16 @@ export const initPostgres = async () => {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
     define: {
-      freezeTableName: true,
+      freezeTableName: true
     },
     dailectOptions: {
       ssl: {
         rejectUnauthorized: false,
-        useUTC: false,
-      },
+        useUTC: false
+      }
     },
     timezone: '+05:30',
-    logging: false,
+    logging: false
   });
 
   const [result] = await sequelize.query(`

@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer';
-import { nodemailerConfig } from './config';
-
 // Types import
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+
+import { nodemailerConfig } from './config';
 
 // Mail Transporter configure?
 export const transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo> = nodemailer.createTransport({
@@ -12,7 +12,7 @@ export const transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo> 
   secure: false, // true for 465, false for other ports
   auth: {
     user: nodemailerConfig.userName,
-    pass: nodemailerConfig.pass,
+    pass: nodemailerConfig.pass
   },
-  requireTLS: true,
+  requireTLS: true
 });

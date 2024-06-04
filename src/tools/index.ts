@@ -1,7 +1,8 @@
 import ip from 'ip';
+
 import { nodemailerConfig } from '../config/config';
-import { emailNodemailer } from '../tools/emailNodemailer';
 import { amazonS3Upload } from '../tools/amazonS3Upload';
+import { emailNodemailer } from '../tools/emailNodemailer';
 
 export const getHostUrl = (attachProtocol: boolean): string => {
   let serverUrl = 'localhost';
@@ -16,10 +17,7 @@ export const getHostUrl = (attachProtocol: boolean): string => {
 
   serverUrl = attachProtocol ? `${nodemailerConfig.protocol}://${serverUrl}` : serverUrl;
 
-  serverUrl =
-    nodemailerConfig.includePortInDomain === 'YES'
-      ? `${serverUrl}:${nodemailerConfig.serverPort}`
-      : serverUrl;
+  serverUrl = nodemailerConfig.includePortInDomain === 'YES' ? `${serverUrl}:${nodemailerConfig.serverPort}` : serverUrl;
 
   return serverUrl;
 };

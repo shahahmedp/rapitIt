@@ -1,9 +1,10 @@
-import path from 'path';
 import dotenv from 'dotenv';
 // Types import
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
-import { transporter } from '../config/emailNodemailerTransPorter';
+import path from 'path';
+
 import { nodemailerConfig } from '../config/config';
+import { transporter } from '../config/emailNodemailerTransPorter';
 import { IMailOptions, IMailResponseType } from '../types';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
@@ -22,26 +23,26 @@ export const emailNodemailer = async (receiver: string, subject: string, body?: 
             <p style="margin-bottom: 30px;">You have successfully setup your email</p>
             --
             <p style = "color: #E94D51; font-size: 14px; margin-top: 2px; font-weight: bold;">Regards</p>
-        </div>`,
+        </div>`
     };
 
     // Send Mail
     const finalSend: SMTPTransport.SentMessageInfo = await transporter.sendMail(mailOptions);
     if (finalSend) {
       return {
-        isSuccess: true,
+        isSuccess: true
       };
     } else {
       return {
         isSuccess: false,
-        response: 'Unable to send email',
+        response: 'Unable to send email'
       };
     }
   } catch (error: unknown) {
     console.log('Error SMTP connection::>', error);
     return {
       isSuccess: false,
-      response: error,
+      response: error
     };
   }
 };

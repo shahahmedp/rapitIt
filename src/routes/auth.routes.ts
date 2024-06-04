@@ -1,8 +1,8 @@
 import express from 'express';
 import { Auth } from '../../example/controller/auth.controller';
-import { registerCheck, signInCheck } from '../payloadValidation/checkDataPacket';
-import { VerifySignUp } from '../../example/middleware/verifySignUp';
 import { ValidatorFunc } from '../../example/middleware/ValidatorFunc';
+import { VerifySignUp } from '../../example/middleware/verifySignUp';
+import { registerCheck, signInCheck } from '../payloadValidation/checkDataPacket';
 const router = express.Router();
 
 /**
@@ -89,19 +89,8 @@ const router = express.Router();
  *         description: Bad request
  */
 
-router.post(
-  '/signup',
-  registerCheck,
-  ValidatorFunc.validator,
-  [VerifySignUp.checkUsernameOrEmailExist],
-  Auth.signUp,
-);
+router.post('/signup', registerCheck, ValidatorFunc.validator, [VerifySignUp.checkUsernameOrEmailExist], Auth.signUp);
 
-router.post(
-  '/signin',
-  signInCheck,
-  ValidatorFunc.validator,
-  Auth.signIn,
-);
+router.post('/signin', signInCheck, ValidatorFunc.validator, Auth.signIn);
 
 export { router };

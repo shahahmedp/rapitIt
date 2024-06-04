@@ -1,7 +1,6 @@
-/* eslint-disable prettier/prettier */
 import { Response } from 'express';
-import { logger } from '../Logger';
 
+import { logger } from '../Logger';
 
 interface ErrorInfo {
   status?: string;
@@ -24,7 +23,7 @@ export const responseFormat = async (
   next?: object,
   previous?: object,
   errors?: ErrorInfo,
-  customMessage?: string, // Add customMessage parameter
+  customMessage?: string // Add customMessage parameter
 ) => {
   const errAns = errors?.message ? errors.message : 'Server error';
 
@@ -33,12 +32,12 @@ export const responseFormat = async (
     data: { items: payload },
     page: {
       next: next,
-      previous: previous,
+      previous: previous
     },
     error: {
-      message: errors ? [errAns] : errors,
+      message: errors ? [errAns] : errors
     },
-    message: customMessage,
+    message: customMessage
   });
 };
 

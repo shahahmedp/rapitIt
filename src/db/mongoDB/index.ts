@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import { dbConfig } from '../../config/config';
 
 const initMongo = async () => {
