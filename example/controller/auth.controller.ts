@@ -74,7 +74,7 @@ export class Auth {
             // Proceed with token usage...
           } else {
             // Handle the case where secretKey is not defined or its properties are undefined
-            logger.error({"message": 'Secret key or expiresIn is not defined'})
+            logger.error({ message: 'Secret key or expiresIn is not defined' });
           }
           await responseFormat(dailogue.code200.code, true, res, {
             status: dailogue.code200.message,

@@ -1,8 +1,9 @@
 import winston, { createLogger, format, transports } from 'winston';
-import { LoggerConstants } from "../constants/repoConstants"
+import { LoggerConstants } from '../constants/repoConstants';
 import { LoggerInterface } from '../types';
 const path = process.env.NODE_ENV;
-export class Logger implements LoggerInterface {  private logger: winston.Logger;
+export class Logger implements LoggerInterface {
+  private logger: winston.Logger;
 
   constructor() {
     this.logger = createLogger({

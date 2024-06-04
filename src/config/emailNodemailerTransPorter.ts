@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import { nodemailerConfig } from './config';
-import { nodemailerConstants  } from '../constants/repoConstants';
+import { nodemailerConstants } from '../constants/repoConstants';
 
 // Types import
 import SMTPTransport from 'nodemailer/lib/smtp-transport';

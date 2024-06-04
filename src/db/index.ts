@@ -14,7 +14,7 @@ const dbInit = async () => {
     db = await initMongo();
     return mongoose; // or return any MongoDB-specific DB object if needed
   } else {
-    logger.error({"message": 'Unsupported database type'})
+    logger.error({ message: 'Unsupported database type' });
   }
 };
 

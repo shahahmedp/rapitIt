@@ -8,11 +8,11 @@ const redisClient = createClient({
 });
 
 redisClient.on('error', (err: object) => {
-  logger.error({'Redis error:': err})
+  logger.error({ 'Redis error:': err });
 });
 
 redisClient.on('connect', () => {
-  logger.info('Connected to Redis')
+  logger.info('Connected to Redis');
 });
 
 (async () => {

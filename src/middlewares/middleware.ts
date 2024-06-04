@@ -13,8 +13,8 @@ export const thirdPartyMiddlewares = (app: Express) => {
   // Use cors middleware
   app.use(cors());
 
-  //set ejs 
-  app.set("view engine", "ejs");
+  //set ejs
+  app.set('view engine', 'ejs');
 
   // Parse JSON bodies
   app.use(express.json());
@@ -50,20 +50,20 @@ export const thirdPartyMiddlewares = (app: Express) => {
   app.set('trust proxy', true);
 
   // Set up Swagger API documentation
-    // Swagger definition
+  // Swagger definition
   const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
-      "description": "List of API endpoints for backend server",
-      "version": "1.0.0",
-      "title": "Damco Server API Documentation",
-      "contact": {
-        "email": ""
+      description: 'List of API endpoints for backend server',
+      version: '1.0.0',
+      title: 'Damco Server API Documentation',
+      contact: {
+        email: '',
       },
-      "license": {
-        "name": "Apache 2.0",
-        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-      }
+      license: {
+        name: 'Apache 2.0',
+        url: 'http://www.apache.org/licenses/LICENSE-2.0.html',
+      },
     },
     servers: [
       {

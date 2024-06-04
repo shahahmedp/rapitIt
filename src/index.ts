@@ -5,7 +5,7 @@ import { logger } from './Logger';
 import { config } from './config/config';
 import { dbInit } from './db/index';
 import { handleError } from './utils';
-import { StatusConstants as dailogue } from "./constants/repoConstants"
+import { StatusConstants as dailogue } from './constants/repoConstants';
 // Load environment variables from .env file
 dotenv.config({
   path: process.env.NODE_ENV ? `./env/${process.env.NODE_ENV}.env` : `./env/.env`,

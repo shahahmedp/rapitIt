@@ -4,7 +4,6 @@ import { environment } from '../constants/repoConstants';
 import { handleError } from './errorHandler';
 import { responseFormat } from './responseFormat';
 
-
 export const getHostUrl = (attachProtocol: boolean): string => {
   let serverUrl = environment.HOST;
   const nodeEnv = process.env.NODE_ENV || environment.DEV;
@@ -19,9 +18,7 @@ export const getHostUrl = (attachProtocol: boolean): string => {
   serverUrl = attachProtocol ? `${nodemailerConfig.protocol}://${serverUrl}` : serverUrl;
 
   serverUrl =
-    nodemailerConfig.includePortInDomain === 'YES'
-      ? `${serverUrl}:${nodemailerConfig.serverPort}`
-      : serverUrl;
+    nodemailerConfig.includePortInDomain === 'YES' ? `${serverUrl}:${nodemailerConfig.serverPort}` : serverUrl;
 
   return serverUrl;
 };
