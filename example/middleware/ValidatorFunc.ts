@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../../src/Logger';
-import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
+import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { validationResult } from 'express-validator';
 
 export class ValidatorFunc {

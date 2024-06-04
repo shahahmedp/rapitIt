@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
-import { Response } from 'express';
 import { logger } from '../Logger';
+import { Response } from "express"
 
 
 interface ErrorInfo {
@@ -17,9 +16,9 @@ interface CustomError extends Error {
 }
 
 export const responseFormat = async (
-  res: Response,
   errorCode: number,
   status: boolean,
+  res?: Response,
   payload?: object,
   next?: object,
   previous?: object,
@@ -27,7 +26,11 @@ export const responseFormat = async (
   customMessage?: string, // Add customMessage parameter
 ) => {
   const errAns = errors?.message ? errors.message : 'Server error';
-
+  if(res && !Object.keys(res).length){
+    logger.error({"message":"Response is not available","error": errAns})
+    return; 
+  }
+  if(res)
   res.status(errorCode).send({
     status: status,
     data: { items: payload },

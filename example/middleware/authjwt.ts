@@ -1,10 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { secretKey } from '../../src/config/config';
 import { logger } from '../../src/Logger';
-import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
+import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { handleError } from '../../src/utils';
-
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 export class AuthJwt {
   /**
@@ -34,8 +33,8 @@ export class AuthJwt {
           next();
         }
       });
-    } catch (err: any) {
-      handleError(res, err, dailogue.code500.code);
+    } catch (err) {
+      handleError(err, dailogue.code500.code, res);
     }
   }
 }

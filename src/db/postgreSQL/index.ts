@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import fs from 'fs';
 import path from 'path';
 import { associationModels } from './association';

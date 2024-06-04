@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 'use strict';
 import { Model, UUIDV4, Sequelize, DataTypes } from 'sequelize';
 

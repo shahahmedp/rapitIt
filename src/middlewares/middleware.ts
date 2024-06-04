@@ -13,6 +13,9 @@ export const thirdPartyMiddlewares = (app: Express) => {
   // Use cors middleware
   app.use(cors());
 
+  //set ejs 
+  app.set("view engine", "ejs");
+
   // Parse JSON bodies
   app.use(express.json());
 

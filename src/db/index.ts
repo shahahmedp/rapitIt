@@ -1,13 +1,11 @@
+/*eslint-disable @typescript-eslint/no-explicit-any*/
 import { dbConfig } from '../config/config';
 import { initPostgres, db as postgresDb } from './postgreSQL';
 import { initMongo } from './mongoDB/index';
 import mongoose from 'mongoose';
-// import { 
-//   postgresDbInterface, 
-//   //mongoDbInterface 
-// } from '@db/db.interface';
+import { logger } from '../Logger/index';
 
-let db: any//postgresDbInterface| void; // | mongoDbInterface 
+let db: any;
 const dbInit = async () => {
   if (dbConfig.type === 'postgreSQL') {
     db = await initPostgres();
@@ -16,7 +14,7 @@ const dbInit = async () => {
     db = await initMongo();
     return mongoose; // or return any MongoDB-specific DB object if needed
   } else {
-    throw new Error('Unsupported database type');
+    logger.error({"message": 'Unsupported database type'})
   }
 };
 

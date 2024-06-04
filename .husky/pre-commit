@@ -1,12 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
-
-# yarn lint
-# yarn test
-# Run your custom script
-yarn lint & yarn lint:fix
-yarn format
-
-
-
-
+yarn format &&
+yarn lint && yarn lint:fix 

@@ -1,8 +1,7 @@
 import { Logger } from './logger';
 import { LoggerInterface } from '../types';
 
-let logger: LoggerInterface;
 
-logger = new Logger();
+const logger: LoggerInterface = new Logger();
 
 export { logger };

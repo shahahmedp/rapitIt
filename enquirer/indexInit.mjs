@@ -1,10 +1,11 @@
+/* eslint-disable no-undef */
 import inquirer from 'inquirer';
 import path from 'path';
 import fs from "fs";
 import { execSync } from "child_process";
 import { fileURLToPath } from 'url';
 import events from 'events'
-import { updateConfig } from "./removeTools.mjs"
+//import { updateConfig } from "./removeTools.mjs"
 
 // Suppress MaxListenersExceededWarning
 events.EventEmitter.defaultMaxListeners = 20;
@@ -153,7 +154,7 @@ const initialInquire = async () => {
           removePath(`${projectPath}/src/db/mongoDB`)
           console.log("answers.database 2", answers.database);
         }
-        updateConfig(answers, projectPath)
+        //updateConfig(answers, projectPath)
         console.log(`Repository cloned to ${projectPath}`, taskList);
       }else {
         console.log(`This folder *${projectPath}* already exist`)

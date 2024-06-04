@@ -5,6 +5,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { transporter } from '../config/emailNodemailerTransPorter';
 import { nodemailerConfig } from '../config/config';
 import { IMailOptions, IMailResponseType } from '../types';
+//import { logger } from '../Logger/index';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
@@ -38,6 +39,7 @@ export const emailNodemailer = async (receiver: string, subject: string, body?: 
       };
     }
   } catch (error: unknown) {
+    //logger.error({})
     console.log('Error SMTP connection::>', error);
     return {
       isSuccess: false,

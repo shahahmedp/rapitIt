@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { db } from '../../src/db';
 import { logger } from '../../src/Logger';
-import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
+import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { secretKey } from '../../src/config/config';
 import { responseFormat } from '../../src/utils';
 import { handleError } from '../../src/utils';
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 export class Auth {
   /**
@@ -25,13 +25,13 @@ export class Auth {
           password: bcrypt.hashSync(req.body.password, 8),
         })
         .then(async () => {
-          await responseFormat(res, dailogue.code200.code, true, {
+          await responseFormat(dailogue.code200.code, true, res, {
             status: dailogue.code200.message,
             message: `User ${req.body.username} was registered successfully`,
           });
         });
     } catch (err) {
-      handleError(res, err, dailogue.code500.code);
+      handleError(err, dailogue.code500.code, res);
     }
   }
   /**
@@ -65,11 +65,18 @@ export class Auth {
             });
             return;
           }
-          //generating jwt token to send response
-          const token = jwt.sign({ id: user?.id }, secretKey.secret, {
-            expiresIn: secretKey.expiresIn, // 24 hours
-          });
-          await responseFormat(res, dailogue.code200.code, true, {
+          let token;
+          if (secretKey && secretKey.secret && secretKey.expiresIn) {
+            // Generate JWT token
+            token = jwt.sign({ id: user?.id }, secretKey.secret, {
+              expiresIn: secretKey.expiresIn, // 24 hours
+            });
+            // Proceed with token usage...
+          } else {
+            // Handle the case where secretKey is not defined or its properties are undefined
+            logger.error({"message": 'Secret key or expiresIn is not defined'})
+          }
+          await responseFormat(dailogue.code200.code, true, res, {
             status: dailogue.code200.message,
             id: user?.id,
             username: user?.userName,
@@ -78,7 +85,7 @@ export class Auth {
           });
         });
     } catch (err) {
-      handleError(res, err, dailogue.code500.code);
+      handleError(err, dailogue.code500.code, res);
     }
   }
 }

@@ -1,20 +1,20 @@
-// require('dotenv').config();
-//differentiate the db
-require('dotenv').config({
-  path: `${process.env.NODE_ENV}` ? `./env/${process.env.NODE_ENV}.env` : `./env/.env`,
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path: process.env.NODE_ENV ? `./env/${process.env.NODE_ENV}.env` : `./env/.env`,
 });
 export const config = {
   PORT: process.env.PORT,
 }
-export const dbConfig= {
-    type: 'postgreSQL',
-    username: process.env.PG_DB_USER,
-    password: process.env.PG_DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: '127.0.0.1',
-    dialect: 'postgres',
-    mongoUri: `process.env.MONGO_URI${process.env.DB_NAME}` || `mongodb://localhost:27017/${process.env.DB_NAME}`,
-  };
+export const dbConfig = {
+  type: 'postgreSQL',
+  username: process.env.PG_DB_USER,
+  password: process.env.PG_DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: '127.0.0.1',
+  dialect: 'postgres',
+  mongoUri: process.env.MONGO_URI ? `${process.env.MONGO_URI}/${process.env.DB_NAME}` : `mongodb://localhost:27017/${process.env.DB_NAME}`,
+};
 export const redisConfig= {
     url: 'redis://localhost:6379', // Redis server URL
     // Optional: Include if your Redis server requires authentication

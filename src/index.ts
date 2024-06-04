@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+import dotenv from 'dotenv';
 import 'reflect-metadata';
-import { response } from 'express';
 import { app } from './app';
 import { logger } from './Logger';
 import { config } from './config/config';
 import { dbInit } from './db/index';
 import { handleError } from './utils';
-import { StatusConstants as dailogue } from "./constants/statusConstants"
+import { StatusConstants as dailogue } from "./constants/repoConstants"
 // Load environment variables from .env file
-require('dotenv').config({
+dotenv.config({
   path: process.env.NODE_ENV ? `./env/${process.env.NODE_ENV}.env` : `./env/.env`,
 });
 
@@ -24,7 +23,7 @@ const start = async () => {
       logger.info(`Backend Service App started at: ${new Date()} on port ${PORT}`);
     });
   } catch (err) {
-    handleError(response, err, dailogue.code500.code);
+    handleError(err, dailogue.code500.code);
   }
 };
 

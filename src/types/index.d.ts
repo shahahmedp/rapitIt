@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Model, ModelCtor } from 'sequelize-typescript/dist/model/model/model';
 import Op from 'sequelize/types/operators';
 const Sequelize = require('sequelize');

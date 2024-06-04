@@ -32,7 +32,16 @@ export class StatusConstants {
 }
 
 export const environment = {
-  development:"development",
-  production: "production",
-  testing:"testing",
+  DEV:"dev",
+  PROD: "prod",
+  STAGE:"stage",
+  HOST:"localhost"
+}
+export const nodemailerConstants = {
+  HOST: "smtp.gmail.com",
+  SERVICE: 'gmail'
+}
+export const LoggerConstants = {
+  DATE_FORMAT: 'DD-MM-YYYY HH:mm:ss',
+  BASE_PATH: './src/db/logs/'
 }

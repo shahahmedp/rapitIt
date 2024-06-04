@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { db } from '../../src/db';
 import { logger } from '../../src/Logger';
-import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
+import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { handleError } from '../../src/utils/errorHandler';
 
 export class VerifySignUp {
@@ -12,7 +12,6 @@ export class VerifySignUp {
    * @param res
    * @param next
    */
-  /* eslint-disable */
   public static async checkUsernameOrEmailExist(req: Request, res: Response, next: NextFunction) {
     logger.info('check MIddleware username&email in db');
     try {
@@ -47,7 +46,7 @@ export class VerifySignUp {
             });
         });
     } catch (err) {
-      handleError(res, err, dailogue.code500.code);
+      handleError(err, dailogue.code500.code, res);
     }
   }
 }
