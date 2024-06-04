@@ -25,14 +25,22 @@ export class AuthJwt {
         });
       }
       //verify token
-      jwt.verify(token.toString(), secretKey.secret, (err: Error | null, decoded: string) => {
-        if (err) {
-          return res.status(dailogue.code401.code).send({ status: dailogue.code401.message, message: 'Unauthorized' });
-        } else {
-          req.body.userId = decoded;
-          next();
-        }
-      });
+      if (secretKey && secretKey.secret && secretKey.expiresIn) {
+        jwt.verify(
+          token.toString(),
+          secretKey.secret,
+          (err: jwt.VerifyErrors | null, decoded: object | string | undefined) => {
+            if (err) {
+              return res
+                .status(dailogue.code401.code)
+                .send({ status: dailogue.code401.message, message: 'Unauthorized' });
+            } else {
+              req.body.userId = decoded as string;
+              next();
+            }
+          },
+        );
+      }
     } catch (err) {
       handleError(err, dailogue.code500.code, res);
     }
