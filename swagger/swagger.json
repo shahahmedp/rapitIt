@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "description": "List of API endpoints for backend server",
     "version": "1.0.0",
@@ -12,129 +12,167 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "schemes": ["http", "https"],
-  "host": "localhost:4000",
-  "basePath": "/api",
-  "tags": [
+  "servers": [
     {
-      "name": "Tests",
-      "description": "List of API endpoints for test operations"
+      "url": "http://localhost:3000",
+      "description": "Development server"
     }
   ],
   "paths": {
-    "/tests": {
+    "/api/auth/signup": {
       "post": {
-        "tags": ["Tests"],
-        "summary": "Create Tests",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "Test data to create",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "customerId": {
-                  "type": "string",
-                  "example": "uuid"
-                },
-                "orderId": {
-                  "type": "string",
-                  "example": "uuid"
-                },
-                "merchantId": {
-                  "type": "string",
-                  "example": "uuid"
-                },
-                "claimAmount": {
-                  "type": "number"
-                },
-                "claimSummary": {
-                  "type": "string"
-                },
-                "statusId": {
-                  "type": "number"
-                }
-              },
-              "required": ["customerId", "orderId"]
+        "summary": "Register a new user",
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "User registered successfully"
           },
           "400": {
-            "description": "Bad Request"
-          },
-          "403": {
-            "description": "Forbidden"
-          },
-          "409": {
-            "description": "Conflict"
-          },
-          "500": {
-            "description": "Internal server Error"
+            "description": "Bad request"
           }
         }
-      },
-      "put": {
-        "tags": ["Tests"],
-        "summary": "Update Tests",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "Test data to update",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "customerId": {
-                  "type": "string",
-                  "example": "uuid"
+      }
+    },
+    "/api/auth/signin": {
+      "post": {
+        "summary": "Login a user",
+        "tags": [
+          "Authentication"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "The user's email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "The user's password"
+                  }
                 },
-                "orderId": {
-                  "type": "string",
-                  "example": "uuid"
-                },
-                "claimAmount": {
-                  "type": "number"
-                },
-                "claimSummary": {
-                  "type": "string"
-                },
-                "statusId": {
-                  "type": "number"
-                },
-                "updatedBy": {
-                  "type": "string",
-                  "example": "uuid"
+                "example": {
+                  "email": "johndoe@example.com",
+                  "password": "password123"
                 }
-              },
-              "required": ["customerId", "orderId"]
+              }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/api/test/try1": {
+      "post": {
+        "summary": "Test S3 upload",
+        "tags": [
+          "Test"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful upload"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/api/test/all": {
+      "post": {
+        "summary": "Test endpoint with token authentication",
+        "tags": [
+          "TestWithAuth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
           }
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Token authentication successful"
           },
-          "400": {
-            "description": "Bad Request"
+          "401": {
+            "description": "Unauthorized"
           },
           "403": {
             "description": "Forbidden"
-          },
-          "409": {
-            "description": "Conflict"
-          },
-          "500": {
-            "description": "Internal server Error"
           }
         }
       }
     }
-  }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": [
+          "username",
+          "email",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The user's username"
+          },
+          "email": {
+            "type": "string",
+            "description": "The user's email"
+          },
+          "password": {
+            "type": "string",
+            "description": "The user's password"
+          }
+        },
+        "example": {
+          "username": "johndoe",
+          "email": "johndoe@example.com",
+          "password": "password123"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "The authentication managing API"
+    },
+    {
+      "name": "Test",
+      "description": "Test API"
+    },
+    {
+      "name": "TestWithAuth",
+      "description": "Test API with JWT Authentication"
+    }
+  ]
 }

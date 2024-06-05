@@ -24,15 +24,36 @@ export class StatusConstants {
     message: 'server error',
   };
   public static code404Message = 'Method Not Found';
-  
+
   public static getMessage(code: number): string {
-    const status = Object.values(StatusConstants).find(status => typeof status === 'object' && status.code === code);
+    const status = Object.values(StatusConstants).find((status) => typeof status === 'object' && status.code === code);
     return status ? status.message : 'Error';
   }
 }
 
 export const environment = {
-  development:"development",
-  production: "production",
-  testing:"testing",
-}
+  DEV: 'dev',
+  PROD: 'prod',
+  STAGE: 'stage',
+  HOST: 'localhost',
+};
+export const nodemailerConstants = {
+  HOST: 'smtp.gmail.com',
+  SERVICE: 'gmail',
+};
+export const LoggerConstants = {
+  DATE_FORMAT: 'DD-MM-YYYY HH:mm:ss',
+  BASE_PATH: './src/db/logs/',
+};
+export const dbConstants = {
+  POSTGRES: 'postgreSQL',
+  MONGO: 'mongoDB',
+  BOTH: 'both',
+};
+
+export const apiResponseMessage = {
+  auth: {
+    signUp_success: 'register successful',
+    signUp_fail: 'registration failed',
+  },
+};

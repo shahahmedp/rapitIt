@@ -1,66 +1,96 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "plugin:prettier/recommended", // Use Prettier recommended settings
-    "eslint:recommended", // Use ESLint recommended settings
-    "plugin:@typescript-eslint/recommended" // Use TypeScript ESLint recommended settings
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json", // Use TypeScript project configuration
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "@typescript-eslint", // Use TypeScript ESLint plugin
-    "jest",
-    "prettier"
-  ],
-  "rules": {
-    "semi": ["error", "always"], // Semicolons required at the end of statements
-    "indent": ["error", 2], // Indentation size of 2 spaces
-    "camelcase": "error", // Variables must use camelCase
-    "prettier/prettier": "error", // Ensure code formatting consistency with Prettier
-    "object-shorthand": "off", // Use object shorthand when possible
-    "no-console": "off", // Allow console.log statements
-    "arrow-spacing": "error", // Ensure proper spacing around arrow functions
-    "no-trailing-spaces": "error", // No trailing spaces allowed
-    "prefer-const": "error", // Prefer using const for variable declarations
-    "func-names": ["error", "always"], // Require function names
-    "space-before-blocks": ["error", "always"], // Require space before blocks
-    "prefer-destructuring": "off", // Disable preference for object destructuring
-    "prefer-template": "off", // Disable preference for template literals
-    "global-require": "off", // Allow dynamic requires
-    "no-path-concat": "off", // Allow string concatenation with path
-    "no-plusplus": "off", // Allow the ++ operator
-    "no-restricted-properties": "off", // Allow restricted properties
-    "no-mixed-operators": "off", // Allow mixed operators
-    "import/no-dynamic-require": "off", // Allow dynamic requires
-    "no-duplicate-imports": "warn", // Warn on duplicate imports
-    "no-restricted-syntax": "off", // Allow restricted syntax
-    "no-useless-escape": "off", // Allow escape sequences in strings
-    "no-param-reassign": "off", // Allow parameter reassignment
-    "array-callback-return": "off", // Allow missing return in array functions
-    "security/detect-unsafe-regex": "off", // Allow unsafe regular expressions
-    "security/detect-non-literal-regexp": "off", // Allow non-literal regular expressions
-    "security/detect-object-injection": "off", // Allow object injection
-    "security/detect-non-literal-require": "off", // Allow non-literal requires
-    "security/detect-non-literal-fs-filename": "off", // Allow non-literal file system filenames
-    "security/detect-child-process": "off", // Allow child processes
-    "no-underscore-dangle": "off", // Allow underscores in identifiers
-    "@typescript-eslint/no-explicit-any": "error", // Disallow explicit any type
-    "@typescript-eslint/no-unused-vars": "error", // Disallow unused variables
-    "@typescript-eslint/no-var-requires": "error", // Disallow require statements except in import statements
-    "@typescript-eslint/ban-ts-comment": "off", // Allow @ts-comment directives
-    "max-len": [
-      "error",
-      {
-        "code": 150, // Maximum line length of 150 characters
-        "ignoreComments": true
-      }
-    ]
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "plugin:prettier/recommended",
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "jest",
+      "prettier",
+      "import"
+    ],
+    "rules": {
+      "semi": ["error", "always"],
+      "indent": ["error", 2],
+      "camelcase": "error",
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": true,
+          "singleQuote": true,
+          "tabWidth": 2,
+          "jsxBracketSameLine": false,
+          "printWidth": 120
+        }
+      ],
+      "import/order": [
+        "error",
+        {
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": true
+          },
+          "groups": [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index"
+          ],
+          "newlines-between": "always"
+        }
+      ],
+      "object-shorthand": "off",
+      "no-console": "off",
+      "arrow-spacing": "error",
+      "no-trailing-spaces": "error",
+      "prefer-const": "error",
+      "func-names": ["error", "always"],
+      "space-before-blocks": ["error", "always"],
+      "prefer-destructuring": "off",
+      "prefer-template": "off",
+      "global-require": "off",
+      "no-path-concat": "off",
+      "no-plusplus": "off",
+      "no-restricted-properties": "off",
+      "no-mixed-operators": "off",
+      "import/no-dynamic-require": "off",
+      "no-duplicate-imports": "warn",
+      "no-restricted-syntax": "off",
+      "no-useless-escape": "off",
+      "no-param-reassign": "off",
+      "array-callback-return": "off",
+      "security/detect-unsafe-regex": "off",
+      "security/detect-non-literal-regexp": "off",
+      "security/detect-object-injection": "off",
+      "security/detect-non-literal-require": "off",
+      "security/detect-non-literal-fs-filename": "off",
+      "security/detect-child-process": "off",
+      "no-underscore-dangle": "off",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "max-len": [
+        "error",
+        {
+          "code": 150,
+          "ignoreComments": true
+        }
+      ]
+    },
+    "ignorePatterns": ["node_modules/", "build/", "backup/"]
   }
-}
+  

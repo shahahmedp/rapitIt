@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../../src/Logger';
-import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
+import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { validationResult } from 'express-validator';
+import { handleError } from '../../src/utils/errorHandler';
 
 export class ValidatorFunc {
   /**
@@ -16,7 +17,7 @@ export class ValidatorFunc {
     logger.info('Validator function to validate payload');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(dailogue.code400.code).json({ statuss: dailogue.code400.message, message: errors });
+      handleError({ statuss: dailogue.code400.message, message: errors }, dailogue.code400.code, res);
       return;
     } else {
       next();

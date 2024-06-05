@@ -89,19 +89,8 @@ const router = express.Router();
  *         description: Bad request
  */
 
-router.post(
-  '/signup',
-  registerCheck,
-  ValidatorFunc.validator,
-  [VerifySignUp.checkUsernameOrEmailExist],
-  Auth.signUp,
-);
+router.post('/signup', registerCheck, ValidatorFunc.validator, [VerifySignUp.checkUsernameOrEmailExist], Auth.signUp);
 
-router.post(
-  '/signin',
-  signInCheck,
-  ValidatorFunc.validator,
-  Auth.signIn,
-);
+router.post('/signin', signInCheck, ValidatorFunc.validator, Auth.signIn);
 
 export { router };

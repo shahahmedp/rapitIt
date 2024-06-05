@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     // ECMAScript related options
-    "target": "ES2020",
+    "target": "ES2021",
     "module": "commonjs",
     "baseUrl": "./",
     "outDir": "./build",
+    "rootDir": "src",
     "paths": {
       "@db/*": ["src/db/*"], // Define alias for db directory
       "@config/*": ["src/config/*"], // Define alias for config directory
