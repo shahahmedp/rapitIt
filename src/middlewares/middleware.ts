@@ -7,6 +7,7 @@ import bodyParser from 'body-parser'; // Importing body-parser middleware to par
 import serveStatic from 'serve-static'; // Importing serve-static middleware to serve static files
 import express, { Express } from 'express'; // Importing Express framework
 import path from 'path'; // Importing path module
+import fs from 'fs';
 
 // Function to apply middleware to the Express application
 export const thirdPartyMiddlewares = (app: Express) => {
@@ -80,6 +81,20 @@ export const thirdPartyMiddlewares = (app: Express) => {
   };
 
   const swaggerSpec = swaggerJsdoc(options);
+
+  // Ensure the 'swagger' directory exists and create swagger.json file if it doesn't exist
+  const swaggerDir = path.resolve(__dirname, '../../swagger');
+  const swaggerFilePath = path.join(swaggerDir, 'swagger.json');
+
+  if (!fs.existsSync(swaggerDir)) {
+    fs.mkdirSync(swaggerDir);
+  }
+
+  if (!fs.existsSync(swaggerFilePath)) {
+    fs.writeFileSync(swaggerFilePath, JSON.stringify(swaggerSpec, null, 2), 'utf-8');
+  }
+
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // Middleware to parse JSON bodies
