@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { db } from '../../src/db';
+import { db } from '../../src/db/postgreSQL';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { secretKey } from '../../src/config/config';
@@ -45,7 +45,7 @@ export class Auth {
     try {
       await db.user
         .findOne({
-          where: { userName: req.body.username },
+          where: { email: req.body.email },
         })
         .then(async (user: { password: string; id: string; userName: string; email: string }) => {
           if (!user) {

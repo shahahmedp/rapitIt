@@ -49,7 +49,7 @@ module.exports = (sequelize: Sequelize, DataType: typeof DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'user',
     },
   );
 

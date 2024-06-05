@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { db } from '../../src/db';
+import { db } from '../../src/db/postgreSQL';
 import { logger } from '../../src/Logger';
 import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { handleError } from '../../src/utils/errorHandler';
@@ -17,7 +17,7 @@ export class VerifySignUp {
     try {
       await db.user
         .findOne({
-          where: { userName: req.body.username },
+          where: { email: req.body.email },
         })
         .then((usr: object) => {
           if (usr) {
