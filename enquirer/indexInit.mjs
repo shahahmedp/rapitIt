@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+ 
 import inquirer from 'inquirer';
 import path from 'path';
 import fs from "fs";
@@ -199,7 +199,7 @@ const removePatternsFromGitignore = async () => {
       .replace(/bin\n/g, '') // Remove 'bin\n'
       .replace(/build\n/g, '') // Remove 'build\n'
       .replace(/emquirer\n/g, '') // Remove 'emquirer\n'
-      .replace(/\.debug\.json\n/g, 'example/*'); // Remove '*.debug.json\n'
+      .replace(/\.debug\.json\n/g, /example\n/g); // Remove '*.debug.json\n'
 
     // Write the updated content back to the .gitignore file
     fs.writeFileSync(filePath, gitignoreContent, 'utf8');
