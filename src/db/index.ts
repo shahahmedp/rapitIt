@@ -8,23 +8,23 @@ import { logger } from '../Logger/index';
 const dbInit = async () => {
   if (dbConfig.type === dbConstants.POSTGRES) {
     await initPostgres();
+    //return postgresDb;
+  } else {
+    logger.error({ message: 'Unsupported database type' });
+  }
+
+  if (dbConfig.type === dbConstants.BOTH) {
+    await initMongo();
+    return mongoose;
+    await initPostgres();
     return postgresDb;
   } else {
     logger.error({ message: 'Unsupported database type' });
   }
 
-  // if (dbConfig.type === dbConstants.BOTH) {
-  //   await initMongo();
-  //   return mongoose;
-  //   await initPostgres();
-  //   return postgresDb;
-  // } else {
-  //   logger.error({ message: 'Unsupported database type' });
-  // }
-
   if (dbConfig.type === dbConstants.MONGO) {
     await initMongo();
-    return mongoose; // or return any MongoDB-specific DB object if needed
+    //return mongoose; // or return any MongoDB-specific DB object if needed
   } else {
     logger.error({ message: 'Unsupported database type' });
   }
