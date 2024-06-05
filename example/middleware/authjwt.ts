@@ -19,10 +19,15 @@ export class AuthJwt {
       const token = req.headers['x-access-token'];
       //check token in request
       if (!token) {
-        return res.status(dailogue.code403.code).send({
-          status: dailogue.code403.message,
-          message: 'no token provided!',
-        });
+        handleError(
+          {
+            status: dailogue.code403.message,
+            message: 'no token provided!',
+          },
+          dailogue.code403.code,
+          res,
+        );
+        return;
       }
       //verify token
       if (secretKey && secretKey.secret && secretKey.expiresIn) {
@@ -31,9 +36,12 @@ export class AuthJwt {
           secretKey.secret,
           (err: jwt.VerifyErrors | null, decoded: object | string | undefined) => {
             if (err) {
-              return res
-                .status(dailogue.code401.code)
-                .send({ status: dailogue.code401.message, message: 'Unauthorized' });
+              handleError(
+                { message: dailogue.code401.message, error: err, description: 'Unauthorized' },
+                dailogue.code401.code,
+                res,
+              );
+              return;
             } else {
               req.body.userId = decoded as string;
               next();

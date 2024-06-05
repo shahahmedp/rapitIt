@@ -45,3 +45,15 @@ export const LoggerConstants = {
   DATE_FORMAT: 'DD-MM-YYYY HH:mm:ss',
   BASE_PATH: './src/db/logs/',
 };
+export const dbConstants = {
+  POSTGRES: 'postgreSQL',
+  MONGO: 'mongoDB',
+  BOTH: 'both',
+};
+
+export const apiResponseMessage = {
+  auth: {
+    signUp_success: 'register successful',
+    signUp_fail: 'registration failed',
+  },
+};

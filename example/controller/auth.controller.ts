@@ -31,7 +31,7 @@ export class Auth {
           });
         });
     } catch (err) {
-      handleError(err, dailogue.code500.code, res);
+      handleError({ message: '', error: err }, dailogue.code500.code, res);
     }
   }
   /**
@@ -49,20 +49,29 @@ export class Auth {
         })
         .then(async (user: { password: string; id: string; userName: string; email: string }) => {
           if (!user) {
-            res.status(dailogue.code404.code).send({
-              status: dailogue.code404.message,
-              message: 'User Not found .',
-            });
+            handleError(
+              {
+                status: dailogue.code404.message,
+                message: 'User Not found .',
+              },
+              dailogue.code404.code,
+              res,
+            );
             return;
           }
           //comparing password
           const passwordIsValid = bcrypt.compareSync(req.body.password, user?.password);
           //if not password is same
           if (!passwordIsValid) {
-            res.status(401).send({
-              accessToken: null,
-              message: 'invalid password!',
-            });
+            handleError(
+              {
+                accessToken: null,
+                message: 'invalid password!',
+                error: dailogue.code401.message,
+              },
+              dailogue.code401.code,
+              res,
+            );
             return;
           }
           let token;
@@ -74,7 +83,7 @@ export class Auth {
             // Proceed with token usage...
           } else {
             // Handle the case where secretKey is not defined or its properties are undefined
-            logger.error({ message: 'Secret key or expiresIn is not defined' });
+            throw new Error('Secret key or expiresIn is not defined');
           }
           await responseFormat(dailogue.code200.code, true, res, {
             status: dailogue.code200.message,

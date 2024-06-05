@@ -14,17 +14,17 @@ dotenv.config({
 const PORT = config.PORT;
 console.log('env', process.env.MODE, process.env.PORT, process.env.NODE_ENV, `./env/${process.env.NODE_ENV}.env`);
 
-const start = async () => {
-  try {
-    // Initializing the db before starting the server
-    await dbInit();
-
-    app.listen(PORT, () => {
-      logger.info(`Backend Service App started at: ${new Date()} on port ${PORT}`);
-    });
-  } catch (err) {
-    handleError(err, dailogue.code500.code);
-  }
+const startServer = () => {
+  app.listen(PORT, async () => {
+    logger.info(`Backend Service App started at: ${new Date()} on port ${PORT}`);
+    try {
+      await dbInit();
+      logger.info('Database initialized successfully.');
+    } catch (err) {
+      logger.error({ message: 'Error initializing the database: ', error: err });
+      handleError(err, dailogue.code500.code);
+    }
+  });
 };
 
-start();
+startServer();

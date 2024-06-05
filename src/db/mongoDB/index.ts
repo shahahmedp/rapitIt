@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import { dbConfig } from '../../config/config';
+import { mongoDbConfig } from '../../config/config';
 import { logger } from '../../Logger';
 
 const initMongo = async () => {
   try {
-    await mongoose.connect(dbConfig.mongoUri);
+    await mongoose.connect(mongoDbConfig.mongoUri);
     logger.info('Connected to MongoDB');
   } catch (error) {
     logger.error({

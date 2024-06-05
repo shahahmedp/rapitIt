@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { associationModels } from './association';
-import { dbConfig } from '../../config/config';
+import { postgreSQLdbConfig } from '../../config/config';
 import { postgresDbInterface } from '../../types';
 
 const Sequelize = require('sequelize');
@@ -11,27 +11,32 @@ const basename = path.basename(__filename);
 const db: postgresDbInterface = {};
 
 export const initPostgres = async () => {
-  const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, {
-    host: dbConfig.host,
-    dialect: dbConfig.dialect,
-    define: {
-      freezeTableName: true,
-    },
-    dailectOptions: {
-      ssl: {
-        rejectUnauthorized: false,
-        useUTC: false,
+  const sequelize = new Sequelize(
+    postgreSQLdbConfig.database,
+    postgreSQLdbConfig.username,
+    postgreSQLdbConfig.password,
+    {
+      host: postgreSQLdbConfig.host,
+      dialect: postgreSQLdbConfig.dialect,
+      define: {
+        freezeTableName: true,
       },
+      dailectOptions: {
+        ssl: {
+          rejectUnauthorized: false,
+          useUTC: false,
+        },
+      },
+      timezone: '+05:30',
+      logging: false,
     },
-    timezone: '+05:30',
-    logging: false,
-  });
+  );
 
   const [result] = await sequelize.query(`
-    SELECT 1 FROM pg_database WHERE datname = '${dbConfig.database}'
+    SELECT 1 FROM pg_database WHERE datname = '${postgreSQLdbConfig.database}'
   `);
   if (result.length == 0) {
-    await sequelize.query(`CREATE DATABASE ${dbConfig.database}`);
+    await sequelize.query(`CREATE DATABASE ${postgreSQLdbConfig.database}`);
   }
 
   fs.readdirSync(__dirname + '/models')

@@ -36,10 +36,14 @@ export class VerifySignUp {
             })
             .then((user: object) => {
               if (user) {
-                res.status(dailogue.code400.code).send({
-                  status: dailogue.code400.message,
-                  message: 'Failed! Email is already in use!',
-                });
+                handleError(
+                  {
+                    status: dailogue.code400.message,
+                    message: 'Failed! Email is already in use!',
+                  },
+                  dailogue.code400.code,
+                  res,
+                );
                 return;
               }
               next();

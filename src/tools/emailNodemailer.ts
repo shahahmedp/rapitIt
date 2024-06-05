@@ -40,6 +40,7 @@ export const emailNodemailer = async (receiver: string, subject: string, body?: 
     }
   } catch (error: unknown) {
     //logger.error({})
+
     console.log('Error SMTP connection::>', error);
     return {
       isSuccess: false,
