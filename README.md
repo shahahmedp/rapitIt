@@ -77,6 +77,12 @@ Auto setup the repo
 ```bash
   yarn Repo:setup
 ```
+
+Set-up your repo 
+
+```bash
+git init
+```
 ## Run
 
 Run the server locally in development

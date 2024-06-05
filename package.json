@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc -p .",
     "clean": "rm -fr dist",
-    "Repo:setup":"node ./enquirer/indexInit.mjs",
+    "Repo:setup": "node ./enquirer/indexInit.mjs",
     "serve:prod": "cross-env NODE_ENV=production node ./build/src/index.js",
     "serve:dev": "cross-env NODE_ENV=development nodemon ./src/index.ts",
     "test:devENV": "cross-env NODE_ENV=development jest",
@@ -56,11 +56,13 @@
     "pretty-quick": "^4.0.0",
     "redis": "^4.6.14",
     "reflect-metadata": "^0.2.2",
+    "rimraf": "^5.0.7",
     "sequelize": "^6.37.3",
     "sequelize-typescript": "^2.1.6",
     "serve-static": "^1.15.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.12.0",
     "winston": "^3.13.0"

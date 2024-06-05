@@ -50,12 +50,6 @@ const initialInquire = async () => {
       message: 'Are you using AWS S3?',
     },
     {
-      type: 'input',
-      name: 'awsS3Bucket',
-      message: 'Enter the name of your AWS S3 bucket Name(if applicable):',
-      when: (answers) => answers.amazonS3Upload,
-    },
-    {
       type: 'confirm',
       name: 'emailNodemailer',
       message: 'Are you using nodemailer?',
@@ -196,7 +190,7 @@ const removePatternsFromGitignore = async () => {
 
   try {
     //update .gitignore
-    //rimraf.sync(path.join(__dirname, `../.git`));
+    rimraf.sync(path.join(__dirname, `../.git`));
     // Read the contents of the .gitignore file
     let gitignoreContent = fs.readFileSync(filePath, 'utf8');
 
