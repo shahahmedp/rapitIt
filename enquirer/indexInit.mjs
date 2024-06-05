@@ -2,10 +2,11 @@
 import inquirer from 'inquirer';
 import path from 'path';
 import fs from "fs";
-import { execSync } from "child_process";
 import { fileURLToPath } from 'url';
 import events from 'events'
-//import { updateConfig } from "./removeTools.mjs"
+import { exec } from 'child_process';
+//const rimraf = require()
+import { rimraf } from "rimraf"
 
 // Suppress MaxListenersExceededWarning
 events.EventEmitter.defaultMaxListeners = 20;
@@ -13,6 +14,16 @@ events.EventEmitter.defaultMaxListeners = 20;
 // Get the directory name of the current module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const tools = ["emailNodemailer", "redis", "amazonS3Upload"]
+// const dbRemove = {
+//   mongoDB:{
+//     opo:"postgreSQL",
+//     filePath : path.join(__dirname, `../src/db/`),
+//     fileWrite : path.join(__dirname, `../src/db/index.ts`),
+//     contentLocation: ["/import { initPostgres, db as postgresDb } from '\.\/postgreSQL';\n/", "/(?:if\s*\(dbConfig\.type\s*===\s*dbConstants\.POSTGRES\s*\)\s*{\s*await\s*initPostgres\(\);\s*\/\/return\s*postgresDb;\s*}\s*else\s*{\s*logger\.error\({\s*message:\s*'Unsupported\s*database\s*type'\s*}\);\s*}\s*\n*\s*)+/"]
+//   },
+
+// }
 
 const initialInquire = async () => {
   const answers = await inquirer.prompt([
@@ -89,79 +100,53 @@ const initialInquire = async () => {
       message: 'Are you ready to proceed?',
     },
   ]);
-
-  const taskList = [
-    //all files of repo
-    '*',
-    //remove the enquirer
-    '!enquirer/*',
-    //tools 
-    '!src/utils/*',
-    'src/utils/index.ts',
-    'src/utils/responseFormat.ts',
-    //config task list
-    '!src/config/*',
-    'src/config/config.ts',
-  ];
-
   // Process user's input
   if (answers?.confirm) {
-    const projectPath = path.join(__dirname, '../../' ,answers.projectName).replace(/%20/g, ' ');
-    const getBooleanKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, value]) => typeof value === 'boolean' && key != 'confirm' && value));
-    //adding confirmation tools
-    const taskNameKeys = Object.keys(getBooleanKeys(answers))
-
-    taskNameKeys.forEach((task)=>{
-      taskList.push(`src/utils/${task}.ts`);
-      if(task === "emailNodemailer"){
-        taskList.push(`src/config/${task}Transporter.ts`);
-      }
-      if(task === "redis"){
-        taskList.push(`src/config/${task}Client.ts`);
-      }
-    })
     try {
-      if (!fs.existsSync(projectPath)) {
-        fs.mkdirSync(projectPath);
-        console.log("Directory created successfully.");
-        const gitRepoUrl = 'https://github.com/shahahmedp/rapitIt.git';
-        process.chdir(projectPath);
-
-        // Initialize a sparse checkout
-        execSync('git init');
-        execSync(`git remote add origin ${gitRepoUrl}`);
-        execSync('git sparse-checkout init');
-
-        // Add the entire repository to the sparse checkout
-
-        execSync('git sparse-checkout set .');
-        
-        // Exclude all files in src/utils except index.ts and responseFormat.ts
-        fs.writeFileSync('.git/info/sparse-checkout', taskList.join('\n'));
-
-        // Pull from the repository
-        execSync('git pull origin main');
-         //database configuration
-        console.log("answers.database 1", answers.database);
-        if (answers.database === 'both') {
-          taskList.push('src/db/mongoDB/');
-          taskList.push('src/db/postgresSQL/');
-          console.log("answers.database 2", answers.database);
-        } else if (answers.database === 'mongoDB') {
-          removePath(`${projectPath}/src/db/postgresSQL`)
-          console.log("answers.database 2", answers.database);
-        } else if (answers.database === 'postgreSQL') {
-          removePath(`${projectPath}/src/db/mongoDB`)
-          console.log("answers.database 2", answers.database);
-        }
-        //updateConfig(answers, projectPath)
-        console.log(`Repository cloned to ${projectPath}`, taskList);
-      }else {
-        console.log(`This folder *${projectPath}* already exist`)
-        initialInquire();
+      const getBooleanKeys = (obj) => Object.fromEntries(Object.entries(obj).filter(([key, value]) => typeof value === 'boolean' && key != 'confirm' && value));
+      //adding confirmation tools
+      const tools2 = Object.keys(getBooleanKeys(answers))
+      const toolsRemove  = tools.filter(item => !tools2.includes(item));
+      if(toolsRemove.length){
+        toolsRemove.map(async (obj)=>{
+          console.log("obj", obj)
+          const filePath = path.join(__dirname, `../src/tools/${obj}.ts`);
+          await removeFile(filePath)
+          if(obj === "emailNodemailer"){
+            await removeFile(path.join(__dirname, `../src/config/${obj}Transporter.ts`))
+          }
+          if(obj === "redis"){
+            await removeFile(path.join(__dirname, `../src/config/${obj}Client.ts`))
+          }
+        })
       }
+
+      //remove unwanted folder
+      if (answers.database === 'mongoDB') {
+        await removePath(path.join(__dirname, `../src/db/postgreSQL`))
+      }
+      if (answers.database === 'postgreSQL') {
+        await removePath(path.join(__dirname, `../src/db/mongoDb`))
+      }
+      removePatternsFromGitignore()
+      await removePath(path.join(__dirname, `../enquirer`))
+      //excecuting gitinit
+      exec('git init', { cwd: path.join(__dirname, `../`) }, (error, stdout, stderr) => {
+        if (error) {
+          console.error('Error initializing git repository:', error);
+          return;
+        }
+        console.log(stdout);
+  
+        if (stderr) {
+          console.error('Git init stderr:', stderr);
+        }
+      });
     } catch (err) {
+      initialInquire();
       console.error(err);
+    } finally{
+      console.log("*******************************************Auto repo setup is complete********************************************");
     }
   } else {
     console.log('Okay, maybe next time.');
@@ -169,25 +154,64 @@ const initialInquire = async () => {
 }
 initialInquire();
 
-function removePath(targetPath) {
-  console.log("removePath 1", targetPath);
+const removeFile = async (filePath) => {
+  if (fs.existsSync(filePath)) {
+    try {
+      fs.unlinkSync(filePath);
+      console.log(`File removed: ${filePath}`);
+    } catch (err) {
+      if (err.code === 'EPERM') {
+        console.error(`Permission error removing file: ${filePath}. Try running with elevated permissions.`);
+      } else if (err.code === 'ENOENT') {
+        console.error(`File not found: ${filePath}`);
+      } else {
+        console.error(`Error removing file: ${filePath}`, err);
+      }
+    }
+  } else {
+    console.error(`File does not exist: ${filePath}`);
+  }
+};
+
+async function removePath(targetPath) {
   if (fs.existsSync(targetPath)) {
     if (fs.lstatSync(targetPath).isDirectory()) {
-      fs.readdirSync(targetPath).forEach((file) => {
+      fs.readdirSync(targetPath).forEach(async (file) => {
         const curPath = path.join(targetPath, file);
         if (fs.lstatSync(curPath).isDirectory()) {
-          removePath(curPath);
+          await removePath(curPath);
         } else {
           fs.unlinkSync(curPath);
         }
-        console.log("removePath 2", targetPath);
       });
-      console.log("removePath 3", targetPath);
       fs.rmdirSync(targetPath);
     } else {
-      console.log("removePath 4", targetPath);
       fs.unlinkSync(targetPath);
     }
   }
-  console.log("removePath 12", fs.existsSync(targetPath));
 }
+
+const removePatternsFromGitignore = async () => {
+  const filePath = path.join(__dirname, `../.gitignore`);
+
+  try {
+    //update .gitignore
+    //rimraf.sync(path.join(__dirname, `../.git`));
+    // Read the contents of the .gitignore file
+    let gitignoreContent = fs.readFileSync(filePath, 'utf8');
+
+    // Remove the specified patterns
+    gitignoreContent = gitignoreContent
+      .replace(/bin\n/g, '') // Remove 'bin\n'
+      .replace(/build\n/g, '') // Remove 'build\n'
+      .replace(/emquirer\n/g, '') // Remove 'emquirer\n'
+      .replace(/\.debug\.json\n/g, 'example/*'); // Remove '*.debug.json\n'
+
+    // Write the updated content back to the .gitignore file
+    fs.writeFileSync(filePath, gitignoreContent, 'utf8');
+
+    console.log('Updated .gitignore file successfully.');
+  } catch (err) {
+    console.error('Error updating .gitignore file:', err);
+  }
+};
