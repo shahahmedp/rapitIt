@@ -46,8 +46,8 @@ export const LoggerConstants = {
   BASE_PATH: './src/db/logs/',
 };
 export const dbConstants = {
-  POSTGRES: 'postgreSQL',
-  MONGO: 'mongoDB',
+  POSTGRESQL: 'postgreSQL',
+  MONGODB: 'mongoDB',
   BOTH: 'both',
 };
 

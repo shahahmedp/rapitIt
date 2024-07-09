@@ -77,7 +77,7 @@ export const thirdPartyMiddlewares = (app: Express) => {
   const options = {
     swaggerDefinition,
     // Paths to files containing OpenAPI definitions
-    apis: [path.join(__dirname, '../routes/*.ts')], // Correct path to your route files
+    apis: [path.join(__dirname, '../routes/*')], // Correct path to your route files
   };
 
   const swaggerSpec = swaggerJsdoc(options);
