@@ -7,9 +7,9 @@ import { logger } from '../Logger/index';
 
 const dbInit = async () => {
   try {
-    dbConfig.type === dbConstants.MONGO
+    dbConfig.type === dbConstants.MONGODB
       ? await initMongo()
-      : dbConfig.type === dbConstants.POSTGRES
+      : dbConfig.type === dbConstants.POSTGRESQL
         ? await initPostgres()
         : dbConfig.type === dbConstants.BOTH
           ? async () => {
