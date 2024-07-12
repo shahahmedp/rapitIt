@@ -7,11 +7,15 @@ import bodyParser from 'body-parser'; // Importing body-parser middleware to par
 import serveStatic from 'serve-static'; // Importing serve-static middleware to serve static files
 import express, { Express } from 'express'; // Importing Express framework
 import path from 'path'; // Importing path module
+import fs from 'fs';
 
 // Function to apply middleware to the Express application
 export const thirdPartyMiddlewares = (app: Express) => {
   // Use cors middleware
   app.use(cors());
+
+  //set ejs
+  app.set('view engine', 'ejs');
 
   // Parse JSON bodies
   app.use(express.json());
@@ -47,20 +51,20 @@ export const thirdPartyMiddlewares = (app: Express) => {
   app.set('trust proxy', true);
 
   // Set up Swagger API documentation
-    // Swagger definition
+  // Swagger definition
   const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
-      "description": "List of API endpoints for backend server",
-      "version": "1.0.0",
-      "title": "Damco Server API Documentation",
-      "contact": {
-        "email": ""
+      description: 'List of API endpoints for backend server',
+      version: '1.0.0',
+      title: 'Damco Server API Documentation',
+      contact: {
+        email: '',
       },
-      "license": {
-        "name": "Apache 2.0",
-        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-      }
+      license: {
+        name: 'Apache 2.0',
+        url: 'http://www.apache.org/licenses/LICENSE-2.0.html',
+      },
     },
     servers: [
       {
@@ -73,10 +77,24 @@ export const thirdPartyMiddlewares = (app: Express) => {
   const options = {
     swaggerDefinition,
     // Paths to files containing OpenAPI definitions
-    apis: [path.join(__dirname, '../routes/*.ts')], // Correct path to your route files
+    apis: [path.join(__dirname, '../routes/*')], // Correct path to your route files
   };
 
   const swaggerSpec = swaggerJsdoc(options);
+
+  // Ensure the 'swagger' directory exists and create swagger.json file if it doesn't exist
+  const swaggerDir = path.resolve(__dirname, '../../swagger');
+  const swaggerFilePath = path.join(swaggerDir, 'swagger.json');
+
+  if (!fs.existsSync(swaggerDir)) {
+    fs.mkdirSync(swaggerDir);
+  }
+
+  if (!fs.existsSync(swaggerFilePath)) {
+    fs.writeFileSync(swaggerFilePath, JSON.stringify(swaggerSpec, null, 2), 'utf-8');
+  }
+
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // Middleware to parse JSON bodies

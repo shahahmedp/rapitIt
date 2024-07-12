@@ -1,23 +1,27 @@
 import { dbConfig } from '../config/config';
-import { initPostgres, db as postgresDb } from './postgreSQL';
+import { initPostgres } from './postgreSQL';
 import { initMongo } from './mongoDB/index';
-import mongoose from 'mongoose';
-// import { 
-//   postgresDbInterface, 
-//   //mongoDbInterface 
-// } from '@db/db.interface';
+import { dbConstants } from '../constants/repoConstants';
+//import mongoose from 'mongoose';
+import { logger } from '../Logger/index';
 
-let db: any//postgresDbInterface| void; // | mongoDbInterface 
 const dbInit = async () => {
-  if (dbConfig.type === 'postgreSQL') {
-    db = await initPostgres();
-    return postgresDb;
-  } else if (dbConfig.type === 'mongoDB') {
-    db = await initMongo();
-    return mongoose; // or return any MongoDB-specific DB object if needed
-  } else {
-    throw new Error('Unsupported database type');
+  try {
+    dbConfig.type === dbConstants.MONGODB
+      ? await initMongo()
+      : dbConfig.type === dbConstants.POSTGRESQL
+        ? await initPostgres()
+        : dbConfig.type === dbConstants.BOTH
+          ? async () => {
+              await initPostgres();
+              await initMongo();
+            }
+          : () => {
+              throw new Error('Unsupported database type');
+            };
+  } catch (err) {
+    logger.error({ message: err });
   }
 };
 
-export { dbInit, db };
+export { dbInit };

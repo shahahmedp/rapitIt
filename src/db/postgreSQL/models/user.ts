@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 'use strict';
 import { Model, UUIDV4, Sequelize, DataTypes } from 'sequelize';
 
@@ -50,7 +49,7 @@ module.exports = (sequelize: Sequelize, DataType: typeof DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'user',
     },
   );
 

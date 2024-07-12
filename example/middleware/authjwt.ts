@@ -1,10 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { secretKey } from '../../src/config/config';
 import { logger } from '../../src/Logger';
-import { StatusConstants as dailogue } from '../../src/constants/statusConstants';
+import { StatusConstants as dailogue } from '../../src/constants/repoConstants';
 import { handleError } from '../../src/utils';
-
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 export class AuthJwt {
   /**
@@ -20,22 +19,38 @@ export class AuthJwt {
       const token = req.headers['x-access-token'];
       //check token in request
       if (!token) {
-        return res.status(dailogue.code403.code).send({
-          status: dailogue.code403.message,
-          message: 'no token provided!',
-        });
+        handleError(
+          {
+            status: dailogue.code403.message,
+            message: 'no token provided!',
+          },
+          dailogue.code403.code,
+          res,
+        );
+        return;
       }
       //verify token
-      jwt.verify(token.toString(), secretKey.secret, (err: Error | null, decoded: string) => {
-        if (err) {
-          return res.status(dailogue.code401.code).send({ status: dailogue.code401.message, message: 'Unauthorized' });
-        } else {
-          req.body.userId = decoded;
-          next();
-        }
-      });
-    } catch (err: any) {
-      handleError(res, err, dailogue.code500.code);
+      if (secretKey && secretKey.secret && secretKey.expiresIn) {
+        jwt.verify(
+          token.toString(),
+          secretKey.secret,
+          (err: jwt.VerifyErrors | null, decoded: object | string | undefined) => {
+            if (err) {
+              handleError(
+                { message: dailogue.code401.message, error: err, description: 'Unauthorized' },
+                dailogue.code401.code,
+                res,
+              );
+              return;
+            } else {
+              req.body.userId = decoded as string;
+              next();
+            }
+          },
+        );
+      }
+    } catch (err) {
+      handleError(err, dailogue.code500.code, res);
     }
   }
 }

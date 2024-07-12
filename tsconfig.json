@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     // ECMAScript related options
-    "target": "ES2020",
+    "target": "ES2021",
     "module": "commonjs",
     "baseUrl": "./",
     "outDir": "./build",
-
+    "rootDir": "src",
     "paths": {
       "@db/*": ["src/db/*"], // Define alias for db directory
       "@config/*": ["src/config/*"], // Define alias for config directory
@@ -22,24 +22,22 @@
       "@type/*": ["src/types/*"], // Define alias for Sanitization directory
       "@example/*": ["example/*"], // Define alias for example directory
     },
-    "lib":[
-     "ES2020" 
+    "lib": [
+      "ES2020"
     ],
     // Advanced JavaScript features
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
-
     // Strict type-checking options
     "strict": true,
     "strictNullChecks": true,
-
+    "noImplicitAny": true, // Enforce no implicit any types
     // Other strict type-checking options
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-
     // Module interoperability options
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -47,7 +45,6 @@
     "types": [
       "jest"
     ],
-
     // Performance and optimization options
     "skipLibCheck": true
   },
@@ -59,5 +56,5 @@
   // Source files to include
   "include": ["src/**/*.ts"],
   // Directories to exclude from compilation
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build"]
 }

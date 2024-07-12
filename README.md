@@ -56,19 +56,32 @@ The Auto Repo backend setup tool is a command-line interface (CLI) designed to a
 Clone the project
 
 ```bash
-  npx run rapiit
+  #npx run rapiit
+  git clone -b develop "https://github.com/shahahmedp/rapitIt.git"
+
 ```
 
 Go to the project directory
 
 ```bash
-  cd "repo"
+  cd rapiit
 ```
 
 Install dependencies
 
 ```bash
   yarn install
+```
+Auto setup the repo
+
+```bash
+  yarn Repo:setup
+```
+
+Set-up your repo 
+
+```bash
+git init
 ```
 ## Run
 

@@ -23,13 +23,9 @@ const router = express.Router();
  *         description: Bad request
  */
 
-router.post(
-  '/try1',
-  amazonS3Upload.any(),
-  (_req, res) => {
-    console.log('its working');
-    res.status(200).send('Upload successful');
-  }
-);
+router.post('/try1', amazonS3Upload.any(), (_req, res) => {
+  console.log('its working');
+  res.status(200).send('Upload successful');
+});
 
 export { router };

@@ -1,3 +1,4 @@
+import { logger } from '../Logger/index';
 import { redisClient } from '../config/redisClient';
 
 // Function to set a value in the cache
@@ -6,9 +7,9 @@ export const setCache = async (key: string, value: string, expirationInSeconds: 
     await redisClient.set(key, value, {
       EX: expirationInSeconds,
     });
-    console.log(`Cache set for key: ${key}`);
+    logger.info(`Cache set for key: ${key}`);
   } catch (err) {
-    console.error('Error setting cache:', err);
+    logger.error({ error: err, message: 'Error setting cache:' });
   }
 };
 
@@ -16,10 +17,10 @@ export const setCache = async (key: string, value: string, expirationInSeconds: 
 export const getCache = async (key: string) => {
   try {
     const data = await redisClient.get(key);
-    console.log(`Cache retrieved for key: ${key}`);
+    logger.info(`Cache retrieved for key: ${key}`);
     return data;
   } catch (err) {
-    console.error('Error getting cache:', err);
+    logger.error({ error: err, message: 'Error getting cache:' });
     return null;
   }
 };

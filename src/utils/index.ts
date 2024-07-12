@@ -1,26 +1,24 @@
 import ip from 'ip';
 import { nodemailerConfig } from '../config/config';
+import { environment } from '../constants/repoConstants';
 import { handleError } from './errorHandler';
 import { responseFormat } from './responseFormat';
 
-
 export const getHostUrl = (attachProtocol: boolean): string => {
-  let serverUrl = 'localhost';
-  const nodeEnv = process.env.NODE_ENV || 'development';
-  if (nodeEnv === 'development') {
-    serverUrl = 'localhost';
-  } else if (nodeEnv === 'production' && nodemailerConfig.prodDomain !== '') {
+  let serverUrl = environment.HOST;
+  const nodeEnv = process.env.NODE_ENV || environment.DEV;
+  if (nodeEnv === environment.DEV) {
+    serverUrl = environment.HOST;
+  } else if (nodeEnv === environment.PROD && nodemailerConfig.prodDomain !== '') {
     serverUrl = nodemailerConfig.prodDomain;
-  } else if (nodeEnv === 'production' && nodemailerConfig.prodDomain === '') {
+  } else if (nodeEnv === environment.PROD && nodemailerConfig.prodDomain === '') {
     serverUrl = ip.address();
   }
 
   serverUrl = attachProtocol ? `${nodemailerConfig.protocol}://${serverUrl}` : serverUrl;
 
   serverUrl =
-    nodemailerConfig.includePortInDomain === 'YES'
-      ? `${serverUrl}:${nodemailerConfig.serverPort}`
-      : serverUrl;
+    nodemailerConfig.includePortInDomain === 'YES' ? `${serverUrl}:${nodemailerConfig.serverPort}` : serverUrl;
 
   return serverUrl;
 };
